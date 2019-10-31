@@ -1,6 +1,9 @@
 # Ds_Store ignore
 .DS_Store
 
+# except idea setting
+.idea/
+
 # Built application files
 *.apk
 *.ap_
