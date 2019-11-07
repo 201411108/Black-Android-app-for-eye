@@ -1,7 +1,7 @@
 # EmbeddedSoftware_Project
 
 ### 회의 날짜
-매주 목요일 13시 ~
+매주 목요일 14시 ~
 
 ### Coding convention
 통합 전까지 자신이 작성한 코드 앞에는 이니셜을 붙여서 표시
