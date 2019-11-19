@@ -45,10 +45,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         emailJoinBtn.setOnClickListener(){
-            var id : String = edit_email.text.toString()
-            var pw: String = edit_password.text.toString()
-            myRef.setValue("isg1032", "id2")
-            database.getReference("user").child("id3").setValue("isg1033")
+            //var id : String = edit_email.text.toString()
+            //var pw: String = edit_password.text.toString()
+            //myRef.setValue("isg1032", "id2")
+            //database.getReference("user").child("id3").setValue("isg1033")
+            val nextIntent = Intent(this, ISGJoinUser::class.java)
+            startActivity(nextIntent)
         }
 
         emailLoginBtn.setOnClickListener() {
