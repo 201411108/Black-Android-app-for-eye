@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:addStatesFromChildren="true" android:layout_width="match_parent" android:layout_height="match_parent" android:windowSoftInputMode="adjustResize">
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@color/app_main_frame_color" android:layout_width="match_parent" android:layout_height="50dp">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/report_backward" android:paddingRight="10dp" android:layout_width="wrap_content" android:layout_height="match_parent">
+            <ImageView android:id="@+id/imageView10" android:background="@drawable/ic_outline_keyboard_arrow_left_24px" android:layout_width="50dp" android:layout_height="50dp" android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="match_parent">
+            <TextView android:textSize="22sp" android:textStyle="bold" android:textColor="@color/app_white" android:id="@+id/textView2" android:paddingLeft="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="문의 및 제보" android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+    <ScrollView android:background="@color/app_background_gray" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:id="@+id/textView6" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="15dp" android:layout_marginTop="20dp" android:layout_marginRight="15dp" android:text="이용 중에 버그 및 불편한 사항이 있으시면 알려주세요."/>
+            <LinearLayout android:layout_gravity="center_vertical" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="15dp" android:layout_marginTop="25dp" android:layout_marginRight="15dp">
+                <TextView android:textSize="14sp" android:textStyle="bold" android:textColor="@android:color/black" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="제목"/>
+
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name" />
+
+            </LinearLayout>
+            <LinearLayout android:layout_gravity="center_vertical" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="15dp" android:layout_marginTop="15dp" android:layout_marginRight="15dp">
+                <TextView android:textSize="14sp" android:textStyle="bold" android:textColor="@android:color/black" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="문의 내용"/>
+
+                <EditText
+                    android:id="@+id/editText4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/report_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="15dp"
+                android:text="제출" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

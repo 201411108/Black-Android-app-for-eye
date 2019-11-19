@@ -9,6 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".KHDDashboardWriteView"></activity>
+        <activity android:name=".KHDDashboardSearchView"></activity>
+        <activity android:name=".KHDSearchActivity"></activity>
+        <activity android:name=".KHDStudyListActivity"/>
+        <activity android:name=".JHYSettingActivity"></activity>
+        <activity android:name=".JHYMyInfoActivity"></activity>
+        <activity android:name=".JHYNoticeActivity"></activity>
+        <activity android:name=".JHYReportActivity"></activity>
+        <activity android:name=".ISGJoinUser"></activity>
+        <activity android:name=".KkmStudyCreateActivity"
+            android:label="Create"
+            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
+            android:name=".KkmStudyInsertActivity"
+            android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
