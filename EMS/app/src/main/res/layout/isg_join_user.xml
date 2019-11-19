@@ -38,16 +38,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
-    <Button
-        android:id="@+id/ConfirmEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toRightOf="EditEmail"
-
-        />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
