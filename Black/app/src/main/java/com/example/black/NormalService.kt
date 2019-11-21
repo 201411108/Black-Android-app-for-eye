@@ -24,7 +24,7 @@ class NormalService : Service() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun test() {
+    fun MakeNotification() {
         var notificationIntent = Intent(this, MainActivity::class.java)
         var pedingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
 
@@ -52,48 +52,26 @@ class NormalService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Toast.makeText(this, "서비스 실행", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "서비스 실행", Toast.LENGTH_SHORT).show()
 
-        test()
+            MakeNotification()
 
-        var view =
-            (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-                R.layout.background,
-                null
-            )
-        var manager = getSystemService("window") as WindowManager
-        var params: WindowManager.LayoutParams =
-            WindowManager.LayoutParams(-1, -1, 2038, 280, 1)
-
-
-        manager.addView(view, params)
+            var view =
+                (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+                    R.layout.background,
+                    null
+                )
+            var manager = getSystemService("window") as WindowManager
+            var params: WindowManager.LayoutParams =
+                WindowManager.LayoutParams(-1, -1, 2038, 280, 1)
 
 
-
-        manager.removeViewImmediate(view)
-
-
-        //Context.LAYOUT_INFLATER_SERVICE
-
-//        timer(period = 3000) {
-//            runOnUiThred {
-//                manager.addView(view, params)
-//                delayhandler.postDelayed(
-//                    Runnable { manager.removeViewImmediate(view) },
-//                    latencyText.text.toString().toLong()
-//                )
-//            }
-//        }
+            manager.addView(view, params)
 
         return super.onStartCommand(intent, flags, startId)
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        Toast.makeText(this, "11111", Toast.LENGTH_SHORT).show()
-
-    }
-
+//    더더더 어플 참조
 //    public View addTopBackgroundDarkerView() {
 //        int type;
 //        int flag;
@@ -113,4 +91,5 @@ class NormalService : Service() {
 //        view.setFocusableInTouchMode(false);
 //        return view;
 //    }
+
 }

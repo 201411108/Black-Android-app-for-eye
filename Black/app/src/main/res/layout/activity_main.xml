@@ -4,28 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     android:orientation="vertical"
-    android:id="@+id/background"
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/overlay_permission"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="색상  argb  테스트" />
+        android:text="다른 앱 위에 표시(overlay) 권한 획득" />
 
     <Button
         android:id="@+id/service_init"
@@ -40,17 +26,17 @@
         android:text="서비스 중지" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/activity_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Activity에서 화면 깜빡임 test" />
 
     <EditText
         android:id="@+id/latencyText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="검은색 화면 나오는 시간"
+        android:hint="검은 화면 지속시간"
         android:inputType="textPersonName" />
 
     <EditText
