@@ -8,6 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.isg_join_user.*
 import kotlinx.android.synthetic.main.jhy_activity_myinfo.*
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class ISGJoinUser : AppCompatActivity(){
 
@@ -22,11 +31,33 @@ class ISGJoinUser : AppCompatActivity(){
 
         confirmEmailButton.setOnClickListener {
             val emailString: String = editJoinId.text.toString()
-            val eDataValue = myRef.child(emailString)
+            val eDataValue = myRef.child(emailString).addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onCancelled(p0: DatabaseError){
+
+                }
+                override fun onDataChange(p0: DataSnapshot){
+                    for(snapshot in p0.children){
+                        if(snapshot.key.equals("emailString"))
+                            testerTextView.text = snapshot.value.toString()
+                        else
+                            testerTextView.text = "ERROR"
+                    }
+                }
+            })
+            val childUpdates = HashMap<String, Any>()
 
 
+            testerTextView.text = eDataValue.toString()
+        }
+
+        cancelAccount.setOnClickListener {
+            finish()
+        }
+
+        createAccount.setOnClickListener{
 
         }
+
 
     }
 }
