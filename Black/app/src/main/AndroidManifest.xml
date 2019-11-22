@@ -32,6 +32,8 @@
         </activity>
         <!-- added activity-->
         <activity android:name=".MainActivity2"/>
+        <activity android:name=".EyeTipSelectActivity"/>
+        <activity android:name=".EyeTipActivity"/>
     </application>
 
 </manifest>

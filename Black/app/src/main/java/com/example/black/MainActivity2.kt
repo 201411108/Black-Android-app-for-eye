@@ -43,7 +43,8 @@ class MainActivity2 : AppCompatActivity() {
         }
 
         tipBtn.setOnClickListener {
-            Toast.makeText(this, "팁 화면으로 이동", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EyeTipSelectActivity::class.java)
+            startActivity(intent)
         }
 
     } // end of onCreate
