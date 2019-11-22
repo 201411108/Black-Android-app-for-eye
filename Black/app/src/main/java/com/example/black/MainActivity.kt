@@ -18,6 +18,8 @@ import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
 
+    var isRunning = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,13 +30,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         service_init.setOnClickListener {
-            var intent = Intent(this, NormalService::class.java)
-            startForegroundService(intent)
+            if(!isRunning) {
+                startService(Intent(this, NormalService::class.java))
+                isRunning = true
+            }
         }
 
         service_stop.setOnClickListener {
-
+            if (isRunning) {
+                stopService(Intent(this, NormalService::class.java))
+                isRunning = false
+            }
         }
+
 
         activity_test.setOnClickListener {
             var view = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.background, null)
