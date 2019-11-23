@@ -34,6 +34,7 @@
         <activity android:name=".MainActivity2"/>
         <activity android:name=".EyeTipSelectActivity"/>
         <activity android:name=".EyeTipActivity"/>
+        <activity android:name=".ISGTestActivity"/>
     </application>
 
 </manifest>
