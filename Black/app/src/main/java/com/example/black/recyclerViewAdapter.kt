@@ -1,3 +1,11 @@
+/*
+ * reclycerViewAdapter.kt
+ * handongkim
+ * DB 정보를 가져와 리사이클러 뷰를 보여주는 어답터
+ * history
+ * 20191123     handongkim      init
+ */
+
 package com.example.black
 
 import android.content.Context
@@ -7,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+// TODO :: eyeFoodInfo 구조에 따라 리팩토링.
 class recyclerViewAdapter(val context : Context, val eyeFoodInfo : ArrayList<eyeFood>, val itemClick : (eyeFood) -> Unit)
     : RecyclerView.Adapter<recyclerViewAdapter.Holder>() {
 
