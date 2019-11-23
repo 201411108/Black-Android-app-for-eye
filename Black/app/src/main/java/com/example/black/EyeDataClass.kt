@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 
 class EyeDataClass : ViewModel() {
 
-    inner class eyeFood(val id:Int, val title:String, val content:String)
     //inner class eyeTea(val id:Int, val title:String, val content:String)
     //inner class eyeDrug(val id:Int, val title:String, val content:String)
     //inner class eyeExcercise(val id:Int, val title:String, val content:String)
