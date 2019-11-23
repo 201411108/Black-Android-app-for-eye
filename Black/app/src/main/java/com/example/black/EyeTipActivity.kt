@@ -4,10 +4,12 @@
  * intent를 통해 어떤 DB와 연동되는지 확인 후 해당 데이터를 반영하는 액티비티
  * history
  * 20191123     handongkim      init
+ * 20191124     handongkim      recyclerview item 클릭 기능 구현
  */
 
 package com.example.black
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +31,11 @@ class EyeTipActivity : AppCompatActivity() {
         // TODO :: 넘겨받는 intent에 따라서 다른 결과를 가져오도록 만들어야 한다.
         val recyclerAdapter = recyclerViewAdapter(this, EyeDataClass().eyeFoodInfo) {
             Toast.makeText(this, "제목 : ${it.title}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, eachTipActivity::class.java)
+            intent.putExtra("id", it.id.toString())
+            intent.putExtra("title", it.title)
+            intent.putExtra("content", it.content)
+            startActivity(intent)
         }
 
         tipRecyclerView.adapter = recyclerAdapter
