@@ -1,5 +1,6 @@
 package com.example.black
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        checkState()
 
         overlay_permission.setOnClickListener {
             startActivity(Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION", Uri.parse("package:" + getPackageName())))
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("inputSustainTime", sustainTimeText.text.toString().toLong())
 
             if(!isRunning) {
+                kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground)
                 startService(intent)
                 isRunning = true
             }
@@ -91,4 +93,32 @@ class MainActivity : AppCompatActivity() {
         */
 
     }
+
+    fun checkState(){
+        for(service in (getSystemService("activity") as ActivityManager).getRunningServices(Int.MAX_VALUE)){
+//            if(getSystemServiceName(NormalService::class.java).equals(service.service.className)){
+                kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground) // 머리큰화면
+            //}
+
+        }
+    }
+
+//    for (RunningServiceInfo service : ((ActivityManager) getSystemService("activity")).getRunningServices(Integer.MAX_VALUE)) {
+//        if (BackGroundDarkerService.class.getName().equals(service.service.getClassName()) && startButton != null) {
+//            startButton.setBackgroundResource(C2685R.C2686drawable.selector_end);
+//        }
+//    }
+//    for (service in (getSystemService("activity") as ActivityManager).getRunningServices(Integer.MAX_VALUE))
+//    {
+//        if (BackGroundDarkerService::class.java!!.getName() == service.service.getClassName() && startButton != null) {
+//            startButton.setBackgroundResource(C2685R.C2686drawable.selector_end)
+//        }
+//    }
+//    private fun checkState() {
+//        for (service in (getSystemService("activity") as ActivityManager).getRunningServices(Integer.MAX_VALUE)) {
+//            if (BackGroundDarkerService::class.java!!.getName() == service.service.className && startButton != null) {
+//                startButton.setBackgroundResource(C2685R.C2686drawable.selector_end)
+//            }
+//        }
+//    }
 }

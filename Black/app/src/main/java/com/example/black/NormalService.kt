@@ -67,6 +67,7 @@ class NormalService : Service() {
         Toast.makeText(this, "$inputPeroid       $inputSustainTime", Toast.LENGTH_SHORT).show()
 
 
+        //10분 기준 60000 * 10
         CDT = object : CountDownTimer((60000 * 10).toLong(), inputPeroid) {
             override fun onTick(millisUntilFinished: Long) {
 

@@ -59,4 +59,11 @@
         android:layout_height="wrap_content"
         android:text="go to ISG Test Page" />
 
+
+    <ImageView
+        android:id="@+id/kkmTestImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
 </LinearLayout>
