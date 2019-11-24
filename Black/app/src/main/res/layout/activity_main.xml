@@ -32,7 +32,7 @@
         android:text="Activity에서 화면 깜빡임 test" />
 
     <EditText
-        android:id="@+id/latencyText"
+        android:id="@+id/sustainTimeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

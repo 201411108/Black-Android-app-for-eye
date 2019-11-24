@@ -30,8 +30,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         service_init.setOnClickListener {
+            var intent = Intent(this, NormalService::class.java)
+            intent.putExtra("inputPeriod", periodText.text.toString().toLong())
+            intent.putExtra("inputSustainTime", sustainTimeText.text.toString().toLong())
+
             if(!isRunning) {
-                startService(Intent(this, NormalService::class.java))
+                startService(intent)
                 isRunning = true
             }
         }
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                     manager.addView(view, params)
                     delayhandler.postDelayed(
                         Runnable { manager.removeViewImmediate(view) },
-                        latencyText.text.toString().toLong()
+                        sustainTimeText.text.toString().toLong()
                     )
                 }
             }

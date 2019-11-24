@@ -6,63 +6,114 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.drm.DrmStore.Playback.STOP
 import android.graphics.PixelFormat
 import android.os.Handler
 import android.os.IBinder
 import android.text.Layout
+import android.util.Log
 import android.view.*
 import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.getSystemService
+import com.google.android.gms.internal.measurement.zzsl.init
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import kotlin.concurrent.thread
 import kotlin.concurrent.timer
+import android.R.string.cancel
+import java.util.*
+import android.R.string.cancel
+import android.R.attr.start
+import android.os.CountDownTimer
+import android.os.Looper
+import android.location.LocationManager
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+
 
 class NormalService : Service() {
 
     lateinit var view: View
-    lateinit var manager : WindowManager
+    lateinit var manager: WindowManager
+    lateinit var handler: Handler
+    lateinit var params: WindowManager.LayoutParams
+    lateinit var CDT : CountDownTimer
+    var inputPeroid : Long = 0
+    var inputSustainTime : Long = 0
+
+    var isOnView = false
 
     override fun onBind(intent: Intent?): IBinder? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
-    inner class counter : Runnable {
-
-        var handler = Handler()
-        var count = 0
-
-        override fun run() {
-            for (count in 0..2) {
-
-//                handler.post(Runnable { manager },1000)
-
-                Thread.sleep(100)
-            }
-        }
+    override fun onCreate() {
+        super.onCreate()
+        init()
     }
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Toast.makeText(this, "서비스 실행", Toast.LENGTH_SHORT).show()
 
-        init()
+        inputPeroid = intent!!.getLongExtra("inputPeriod", 0)
+        inputSustainTime = intent!!.getLongExtra("inputSustainTime", 0)
 
-        MakeNotification()
+        Toast.makeText(this, "$inputPeroid       $inputSustainTime", Toast.LENGTH_SHORT).show()
 
-        addBlackView()
 
-        //일정 시간 뒤 자기자신 종료
-//        var handler = Handler()
-//        handler.postDelayed(Runnable {this@NormalService.stopSelf()}, 2000)
+        CDT = object : CountDownTimer((60000 * 10).toLong(), inputPeroid) {
+            override fun onTick(millisUntilFinished: Long) {
 
-//        timer(period = 2000) {
+                if(Looper.myLooper() == null){
+                    Looper.prepare()
+                }
+                addBlackView()
+                handler.postDelayed(Runnable {
+                    removeBlackView()
+                }, inputSustainTime)
+            }
 
-            //            runOnUiThread {
+            override fun onFinish() {
+                //마지막에 실행할 구문
+            }
+        }
+        CDT.start() //CountDownTimer 실행
+
+
+
+
+//        var handler = Handler(Looper.getMainLooper())
+//
+//        var te = object : Runnable {
+//            override fun run() {
+//                removeBlackView()
+//            }
+//        }
+//
+//        var dosome = Runnable {
+//            fun run(){
+//                Toast.makeText(this, "ttttt", Toast.LENGTH_SHORT).show()
+//                addBlackView()
+//                handler.postDelayed(Runnable { a.run() }, 3000)
+//            }
+//        }
+//        dosome.run()
+
+        //manager.removeView(view)
+
+//        var handler = Handler(Looper.getMainLooper()).postDelayed(Runnable() {
+//            addBlackView()
+//        }, 1000)
+
+
+//        timer(period = periodText.text.toString().toLong()) {
+//            runOnUiThread {
 //                manager.addView(view, params)
 //                delayhandler.postDelayed(
 //                    Runnable { manager.removeViewImmediate(view) },
@@ -71,27 +122,100 @@ class NormalService : Service() {
 //            }
 //        }
 
-//        var aaa = counter()
+//        private void startTimer(){
+//            timer = new Timer();
+//            timerTask = new TimerTask() {
+//                public void run() {
+//                    handler.post(new Runnable() {
+//                        public void run(){
+//                            //your code is here
+//                        }
+//                    });
+//                }
+//            };
+//            timer.schedule(timerTask, 5000, 5000);
+//        }
+
+//        var handler = Handler()
+
+//        val timer = Timer()
+//
+//        val TT = object : TimerTask() {
+//            override fun run() {
+//                if(Looper.myLooper() == null){
+//                    Looper.prepare()
+//                }
+//                addBlackView()
+//                handler.postDelayed(Runnable {
+//                        removeBlackView()
+//                }, 700)
+//            }
+//        }
+////
+//        timer.schedule(TT, 0, 5000) //Timer 실행
+//        timer.cancel()//타이머 종료
+//
+
+//        var aaa = Counter()
 //        aaa.run()
 
+        //stopSelf()
+
+        //일정 시간 뒤 자기자신 종료
+//        var handler = Handler()
+//        handler.postDelayed(Runnable {this@NormalService.stopSelf()}, 2000)
+
+//        timer(period = 2000) {
+
+        //            runOnUiThread {
+//                manager.addView(view, params)
+//                delayhandler.postDelayed(
+//                    Runnable { manager.removeViewImmediate(view) },
+//                    latencyText.text.toString().toLong()
+//                )
+//            }
+//        }
+
+
+//        Thread(Runnable {
+//            try {
+//                Log.i("1ghl","1ghl")
+//                Thread.sleep(1000) // Constants.hour = 3600000 * int
+//                addBlackView()
+//            } catch (e: InterruptedException) {
+//                e.printStackTrace()
+//            }
+//            removeBlackView()
+//        }).start()
+
+        //return START_STICKY
         return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Toast.makeText(this, "서비스 종료", Toast.LENGTH_SHORT).show()
-
-        manager.removeView(view)
+        CDT.cancel()
+        removeBlackView()
     }
 
-    fun addBlackView(): View{
+    fun addBlackView(): View {
 //        var view = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.background, null)
 //        var manager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        var params: WindowManager.LayoutParams = WindowManager.LayoutParams(-1, -1, 2038, 280, 1)
+//
 
-        manager.addView(view, params)
-
+        if (!isOnView) {
+            manager.addView(view, params)
+            isOnView = true
+        }
         return view
+    }
+
+    fun removeBlackView() {
+        if (isOnView) {
+            manager.removeView(view)
+            isOnView = false
+        }
     }
 
 //    더더더 어플 참조
@@ -145,9 +269,14 @@ class NormalService : Service() {
         manager.notify(10, builder.build())
     }
 
-    fun init(){
-        view = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.background, null)
+    fun init() {
+        view = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+            R.layout.background,
+            null
+        )
         manager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        handler = Handler()
+        params = WindowManager.LayoutParams(-1, -1, 2038, 280, 1)
     }
 
 //    override fun onCreate() {
