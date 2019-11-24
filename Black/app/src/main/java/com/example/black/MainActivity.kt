@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+
         overlay_permission.setOnClickListener {
             startActivity(Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION", Uri.parse("package:" + getPackageName())))
         }
@@ -72,6 +73,13 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
 
             val intent = Intent(this, MainActivity2::class.java)
+            startActivity(intent)
+        }
+
+
+        //임시로 만든 TEST ACTIVITY
+        isgbutton.setOnClickListener {
+            val intent = Intent(this, ISGTestActivity::class.java)
             startActivity(intent)
         }
 

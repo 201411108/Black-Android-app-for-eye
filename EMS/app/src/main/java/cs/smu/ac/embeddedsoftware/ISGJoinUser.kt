@@ -15,7 +15,7 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import kotlin.reflect.typeOf
 
 
 class ISGJoinUser : AppCompatActivity(){
@@ -32,20 +32,34 @@ class ISGJoinUser : AppCompatActivity(){
         confirmEmailButton.setOnClickListener {
             val emailString: String = editJoinId.text.toString()
             val eDataValue = myRef.child(emailString).addListenerForSingleValueEvent(object: ValueEventListener{
-                override fun onCancelled(p0: DatabaseError){
+                    override fun onCancelled(p0: DatabaseError){
 
                 }
                 override fun onDataChange(p0: DataSnapshot){
+                    val p2 = p0.getValue() as Map<String, UserData>
+                    val testString = p2.get("isg1031")
+
+                    if(testString != null)
+                        testerTextView.text = testString.email
+                    if(p2.toString() != "null"){
+                        //testerTextView.text = "true"
+                    }
+                    else{
+                        //testerTextView.text = "false"
+                    }
+                    /*
                     for(snapshot in p0.children){
                         if(snapshot.key.equals("emailString"))
-                            testerTextView.text = snapshot.value.toString()
+                            //testerTextView.text = snapshot.value.toString()
                         else
-                            testerTextView.text = "ERROR"
+                            //testerTextView.text = "ERROR"
                     }
+
+                    */
+
                 }
             })
             val childUpdates = HashMap<String, Any>()
-
 
             testerTextView.text = eDataValue.toString()
         }
