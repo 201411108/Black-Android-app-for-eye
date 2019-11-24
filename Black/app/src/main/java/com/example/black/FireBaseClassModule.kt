@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener
  *  ㄴ etc... (이후로 몸에좋은 약 등등은 이름 명명해서 추후 업데이트하면 됨)
  */
 
-data class EyeSavingData(
+class EyeSavingData(
     var name: String?,
     var element: String?,
     var effect: String?,
@@ -58,7 +58,6 @@ public fun getEyeSavingData(categoryEnum: Category, name: String) : EyeSavingDat
         override fun onDataChange(p0: DataSnapshot) {
             var eDataString = p0.getValue() as Map<String, EyeSavingData?>
             retData = eDataString.get(name) //Get 이후 EyeSavingData 자료 다루는데서 오류 발생
-
         }
     })
     return retData

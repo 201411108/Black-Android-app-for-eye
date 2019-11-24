@@ -3,7 +3,10 @@ package com.example.black
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_tips_view.*
 import kotlinx.android.synthetic.main.isg_test_activity.*
 
@@ -17,13 +20,23 @@ class ISGTestActivity : AppCompatActivity() {
             val eDB = database.getReference("eyesaving")
 
             //eDB.child("food").child("test").setValue(EyeSavingData("name", "element", "effect", 1234, "explain"))
-            setEyeSavingData(Category.food, "orange", EyeSavingData("orange", "Vitamin C", "good at Eye", 1000, "Orange is Orange", "src"))
+            //setEyeSavingData(Category.food, "orange", EyeSavingData("orange", "Vitamin C", "good at Eye", 1000, "Orange is Orange", "src"))
 
+            val eData = eDB.child("food").addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {}
+                override fun onDataChange(p0: DataSnapshot) {
+                    //var eDataString = p0.getValue() as Map<String, EyeSavingData>
+                    val testMap = p0.getValue() as Map<String, EyeSavingData?>
+                    val testData = testMap.getValue("orange") as EyeSavingData
+                    isgTestTextView.text = testData.name
+                    //val retData = eDataString.get("orange") //Get 이후 EyeSavingData 자료 다루는데서 오류 발생
 
-            val dTestVal = getEyeSavingData(Category.food, "orange")
-            if(dTestVal != null)
-                isgTestTextView.text = dTestVal.name + dTestVal.element //오류발생
-            isgTestTextView.text = dTestVal.toString()
+                    //if(retData != null)
+                    //    isgTestTextView.text = retData.name + retData.element
+                    //else
+                    //    isgTestTextView.text = "Cannot Find Data"
+                }
+            })
         }
     }
 }
