@@ -25,18 +25,24 @@ class ISGTestActivity : AppCompatActivity() {
             val eData = eDB.child("food").addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {}
                 override fun onDataChange(p0: DataSnapshot) {
+                    val eDataStream = p0.getValue().toString() as Map<String, EyeSavingData?>
+                    isgTestTextView.text = eDataStream.getValue("orange").toString()
                     //var eDataString = p0.getValue() as Map<String, EyeSavingData>
-                    val testMap = p0.getValue() as Map<String, EyeSavingData?>
-                    val testData = testMap.getValue("orange") as EyeSavingData
-                    isgTestTextView.text = testData.name
-                    //val retData = eDataString.get("orange") //Get 이후 EyeSavingData 자료 다루는데서 오류 발생
+                    //val testMap = p0.getValue() as Map<String, EyeSavingData?>
+                    //val testData = testMap.getValue("orange")
+                    //isgTestTextView.text = testData.toString()
+                        //val retData = eDataString.get("orange") //Get 이후 EyeSavingData 자료 다루는데서 오류 발생
 
-                    //if(retData != null)
-                    //    isgTestTextView.text = retData.name + retData.element
-                    //else
-                    //    isgTestTextView.text = "Cannot Find Data"
+                        //if(retData != null)
+                        //    isgTestTextView.text = retData.name + retData.element
+                        //else
+                        //    isgTestTextView.text = "Cannot Find Data"
+
+
                 }
             })
+
+
         }
     }
 }
