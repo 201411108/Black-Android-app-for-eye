@@ -18,6 +18,9 @@ public class SQLiteClassModule{
     }
 }
 
+//ANKO Library : https://github.com/Kotlin/anko/wiki/Anko-SQLite
+
+//인터넷에서 퍼온 예제
 class MindOrksDBOpenHelper(context: Context,
                            factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME,
