@@ -1,8 +1,13 @@
 package com.example.black
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -15,6 +20,23 @@ class ISGTestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.isg_test_activity)
 
+        isgTestButton.setOnClickListener {
+            //EyeSavingDatabase db = Room.databaseBuilder(getApplicationContext(), EyeSavingDatabase.class , "eyesaving").build()
+            val db = Room.databaseBuilder(applicationContext, EyeSavingDatabase::class.java, "eyesaving").build()
+
+            val insertImage : Drawable? = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_foreground, null)
+            var insertTestData = EyeSaving("orange", "Vitamin C", "good at eye", 2000, "orange is orange", insertImage, 0)
+            db.EyeSavingDAO().insertData(insertTestData)
+
+            val dataList = db.EyeSavingDAO().loadAllData()
+            for(i in dataList){
+                isgTestTextView.text = i.name + i.explain
+
+            }
+
+        }
+
+        /*
         isgTestButton.setOnClickListener {
             val database = FirebaseDatabase.getInstance()
             val eDB = database.getReference("eyesaving")
@@ -41,8 +63,7 @@ class ISGTestActivity : AppCompatActivity() {
 
                 }
             })
-
-
         }
+         */
     }
 }

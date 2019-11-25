@@ -1,10 +1,5 @@
-
 package com.example.black
 
-
-//폐기
-
-/*
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -44,7 +39,7 @@ data class EyeSaving(@PrimaryKey val name: String,
                      val effect: String,
                      val cost: Int,
                      val explain: String,
-                     val image: Drawable,
+                     val image: Drawable?,
                      val category: Int) //0: food, 1: tea, 2: ...
 
 @Dao
@@ -75,9 +70,9 @@ abstract class EyeSavingDatabase:RoomDatabase(){
     abstract fun EyeSavingDAO(): EyeSavingDAO
 }
 
+class RoomDBModule{
 
+}
 
 
 //ANKO Library : https://github.com/Kotlin/anko/wiki/Anko-SQLite
-
-*/

@@ -1,11 +1,14 @@
 package com.example.black
 
+import android.graphics.drawable.Drawable
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+//폐기
 
+/*
 /*
  *  DB 내부 구조
  *  eyesaving (0: food, 1: tea ...)
@@ -17,6 +20,7 @@ import com.google.firebase.database.ValueEventListener
  *      ㄴ   effect: String (효과 이 음식이 어떻게 효과를 가져다 주는지)
  *      ㄴ   cost: Int (대략적인 평균 가격대)
  *      ㄴ   explain: String (해당 음식에 대한설명)
+ *      ㄴ   image: Drawable
  *  ㄴ tea
  *      |
  *      이하구조는 food와 동일
@@ -29,7 +33,7 @@ class EyeSavingData(
     var effect: String?,
     var cost: Int?,
     var explain: String?,
-    var image: String?
+    var image: Drawable?
 )
 
 enum class Category {
@@ -80,3 +84,5 @@ public fun setEyeSavingData(categoryEnum: Category, name: String, data: EyeSavin
     }
     database.child(category).child(name).setValue(data)
 }
+
+*/
