@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/isgTestImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        />
 
     <TextView
         android:id="@+id/isgTestTextView"
@@ -11,11 +20,25 @@
         android:textSize = "20dp"
     />
 
-    <Button
-        android:id="@+id/isgTestButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text = "Update"
-        />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/isgTestButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "Setter"
+            />
+
+        <Button
+            android:id="@+id/isgTestButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "Getter"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

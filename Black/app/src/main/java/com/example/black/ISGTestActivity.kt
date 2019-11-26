@@ -14,27 +14,42 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_tips_view.*
 import kotlinx.android.synthetic.main.isg_test_activity.*
+import com.example.black.RoomDBModule
 
 class ISGTestActivity : AppCompatActivity() {
+
+    private var eyesavingDB: EyeSavingDatabase? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.isg_test_activity)
 
+        eyesavingDB = EyeSavingDatabase.getInstance(this)
+        //val db = Room.databaseBuilder(applicationContext, EyeSavingDatabase::class.java, "eyesaving").allowMainThreadQueries().build()
+
         isgTestButton.setOnClickListener {
             //EyeSavingDatabase db = Room.databaseBuilder(getApplicationContext(), EyeSavingDatabase.class , "eyesaving").build()
-            val db = Room.databaseBuilder(applicationContext, EyeSavingDatabase::class.java, "eyesaving").build()
 
-            val insertImage : Drawable? = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_foreground, null)
-            var insertTestData = EyeSaving("orange", "Vitamin C", "good at eye", 2000, "orange is orange", insertImage, 0)
-            db.EyeSavingDAO().insertData(insertTestData)
+            val insertImage : Drawable? = ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher_round, null)
+            var insertTestData = EyeSaving("orange", "Vitamin C", "good at eye", 2000, "orange is orange", 0)
+            //var insertTestData = EyeSaving("orange", "Vitamin C", "good at eye", 2000, "orange is orange", insertImage, 0)
 
-            val dataList = db.EyeSavingDAO().loadAllData()
-            for(i in dataList){
-                isgTestTextView.text = i.name + i.explain
-
-            }
+            eyesavingDB?.EyeSavingDAO()?.insertData(insertTestData)
 
         }
+
+
+        isgTestButton2.setOnClickListener {
+            val dataList = eyesavingDB?.EyeSavingDAO()?.loadAllData()
+            if (dataList != null) {
+                for(i in dataList){
+                    //isgTestImage.setImageDrawable(i.image)
+                    isgTestTextView.text = i.name + i.explain
+                }
+            }
+        }
+
+
 
         /*
         isgTestButton.setOnClickListener {

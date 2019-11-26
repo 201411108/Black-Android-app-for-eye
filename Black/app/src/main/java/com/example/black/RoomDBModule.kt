@@ -39,11 +39,11 @@ data class EyeSaving(@PrimaryKey val name: String,
                      val effect: String,
                      val cost: Int,
                      val explain: String,
-                     val image: Drawable?,
+                     //val image: Drawable?,
                      val category: Int) //0: food, 1: tea, 2: ...
 
 @Dao
-interface EyeSavingDAO{
+public interface EyeSavingDAO{
 
     /*
      *  onConflict를 Annotation은 Primary Key가 중복되는 내용이 있을경우
@@ -68,6 +68,26 @@ interface EyeSavingDAO{
 @Database(entities = [(EyeSaving::class)], version = 1)
 abstract class EyeSavingDatabase:RoomDatabase(){
     abstract fun EyeSavingDAO(): EyeSavingDAO
+
+    companion object{
+        private var INSTANCE: EyeSavingDatabase? = null
+
+        fun getInstance(context: Context): EyeSavingDatabase?{
+            if(INSTANCE == null){
+                synchronized(EyeSavingDatabase::class){
+                    INSTANCE = Room.databaseBuilder(context.applicationContext,
+                        EyeSavingDatabase::class.java, "eyesaving")
+                        .allowMainThreadQueries()
+                        .build()
+                }
+            }
+            return INSTANCE
+        }
+
+        fun destroyInstance(){
+            INSTANCE = null
+        }
+    }
 }
 
 class RoomDBModule{
