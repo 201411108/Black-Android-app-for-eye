@@ -28,12 +28,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        //어플리케이션 실행 시 서비스가 실행중인지 확인, 실행중이면 이미지 크기를 큰것으로 교체
         if (checkState()) {
             kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground)
             isRunning = true
         }
 
+        //권한 확인, 권한을 이미 얻었다면 권한 추가 창을 생성하지 않음.
         overlay_permission.setOnClickListener {
             if (!Settings.canDrawOverlays(this)) {
                 startActivity(
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //서비스 시작
         service_init.setOnClickListener {
             var intent = Intent(this, NormalService::class.java)
             intent.putExtra("inputPeriod", periodText.text.toString().toLong())
@@ -59,8 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // ISSUE :: 어플리케이션 onPause 전환 후 notification을 통해 접근 시 서비스가 종료되지 않음.
-        //          앱 강제 종료 이후에도 notification이 상단 메뉴에 계속 살아있음.
+        //서비스 중지
         service_stop.setOnClickListener {
             if (isRunning) {
                 stopService(Intent(this, NormalService::class.java))
@@ -68,37 +69,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // ISSUE :: 서비스 실행 중 이 버튼 클릭 시 앱이 터지는 문제 발생
-        activity_test.setOnClickListener {
-            var view =
-                (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-                    R.layout.background,
-                    null
-                )
-            var manager = getSystemService("window") as WindowManager
-            var params: WindowManager.LayoutParams =
-                WindowManager.LayoutParams(-1, -1, 2038, 280, 1)
-
-
-            var delayhandler = Handler()
-
-            timer(period = periodText.text.toString().toLong()) {
-                runOnUiThread {
-                    manager.addView(view, params)
-                    delayhandler.postDelayed(
-                        Runnable { manager.removeViewImmediate(view) },
-                        sustainTimeText.text.toString().toLong()
-                    )
-                }
-            }
-        }
-
         button.setOnClickListener {
-
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
         }
-
 
         //임시로 만든 TEST ACTIVITY
         isgbutton.setOnClickListener {
@@ -107,45 +81,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //서비스가 이미 실행중인지 확인하는 함수
     fun checkState(): Boolean {
-//        for(service in (getSystemService("activity") as ActivityManager).getRunningServices(Int.MAX_VALUE)){
-//            if(getSystemServiceName(NormalService::class.java).equals(service.service.className)){
-//                kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground) // 머리큰화면
-//            }
-
-        if (isMyServiceRunning(NormalService::class.java)) {
-            return true
-        }
-        return false
-    }
-
-
-    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
-        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
+        for(service in (getSystemService(Context.ACTIVITY_SERVICE)as ActivityManager).getRunningServices(Integer.MAX_VALUE)){
+            if (NormalService::class.java.name == service.service.className) {
                 return true
             }
         }
         return false
     }
-
-//    for (RunningServiceInfo service : ((ActivityManager) getSystemService("activity")).getRunningServices(Integer.MAX_VALUE)) {
-//        if (BackGroundDarkerService.class.getName().equals(service.service.getClassName()) && startButton != null) {
-//            startButton.setBackgroundResource(C2685R.C2686drawable.selector_end);
-//        }
-//    }
-//    for (service in (getSystemService("activity") as ActivityManager).getRunningServices(Integer.MAX_VALUE))
-//    {
-//        if (BackGroundDarkerService::class.java!!.getName() == service.service.getClassName() && startButton != null) {
-//            startButton.setBackgroundResource(C2685R.C2686drawable.selector_end)
-//        }
-//    }
-//    private fun checkState() {
-//        for (service in (getSystemService("activity") as ActivityManager).getRunningServices(Integer.MAX_VALUE)) {
-//            if (BackGroundDarkerService::class.java!!.getName() == service.service.className && startButton != null) {
-//                startButton.setBackgroundResource(C2685R.C2686drawable.selector_end)
-//            }
-//        }
-//    }
 }
