@@ -12,7 +12,10 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.graphics.toColor
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.background.*
 import java.security.Permission
 import java.util.jar.Manifest
 import kotlin.concurrent.timer
@@ -25,18 +28,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        checkState()
+
+        if (checkState()) {
+            kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground)
+            isRunning = true
+        }
 
         overlay_permission.setOnClickListener {
-            startActivity(Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION", Uri.parse("package:" + getPackageName())))
+            if (!Settings.canDrawOverlays(this)) {
+                startActivity(
+                    Intent(
+                        "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+                        Uri.parse("package:" + getPackageName())
+                    )
+                )
+            }
         }
 
         service_init.setOnClickListener {
             var intent = Intent(this, NormalService::class.java)
             intent.putExtra("inputPeriod", periodText.text.toString().toLong())
             intent.putExtra("inputSustainTime", sustainTimeText.text.toString().toLong())
+            intent.putExtra("inputColor", colorText.text.toString().toInt())
 
-            if(!isRunning) {
+
+            if (!isRunning) {
                 kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground)
                 startService(intent)
                 isRunning = true
@@ -54,9 +70,14 @@ class MainActivity : AppCompatActivity() {
 
         // ISSUE :: 서비스 실행 중 이 버튼 클릭 시 앱이 터지는 문제 발생
         activity_test.setOnClickListener {
-            var view = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.background, null)
+            var view =
+                (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+                    R.layout.background,
+                    null
+                )
             var manager = getSystemService("window") as WindowManager
-            var params : WindowManager.LayoutParams = WindowManager.LayoutParams(-1, -1, 2038,280,1)
+            var params: WindowManager.LayoutParams =
+                WindowManager.LayoutParams(-1, -1, 2038, 280, 1)
 
 
             var delayhandler = Handler()
@@ -84,23 +105,29 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ISGTestActivity::class.java)
             startActivity(intent)
         }
-
-        /*
-        argb 바꾸기
-        layout_item이름.setBackgroundColor(Color.argb(250,0,0,250))
-
-
-        */
-
     }
 
-    fun checkState(){
-        for(service in (getSystemService("activity") as ActivityManager).getRunningServices(Int.MAX_VALUE)){
+    fun checkState(): Boolean {
+//        for(service in (getSystemService("activity") as ActivityManager).getRunningServices(Int.MAX_VALUE)){
 //            if(getSystemServiceName(NormalService::class.java).equals(service.service.className)){
-                kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground) // 머리큰화면
-            //}
+//                kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground) // 머리큰화면
+//            }
 
+        if (isMyServiceRunning(NormalService::class.java)) {
+            return true
         }
+        return false
+    }
+
+
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
     }
 
 //    for (RunningServiceInfo service : ((ActivityManager) getSystemService("activity")).getRunningServices(Integer.MAX_VALUE)) {

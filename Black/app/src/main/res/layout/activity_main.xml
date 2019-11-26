@@ -47,6 +47,14 @@
         android:hint="주기"
         android:inputType="textPersonName" />
 
+    <EditText
+        android:id="@+id/colorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="투명도 0~255"
+        android:inputType="textPersonName" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"

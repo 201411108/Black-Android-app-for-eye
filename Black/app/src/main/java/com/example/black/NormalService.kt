@@ -32,8 +32,10 @@ import android.os.CountDownTimer
 import android.os.Looper
 import android.location.LocationManager
 import android.content.pm.PackageManager
+import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import kotlinx.android.synthetic.main.background.*
 
 
 class NormalService : Service() {
@@ -42,9 +44,10 @@ class NormalService : Service() {
     lateinit var manager: WindowManager
     lateinit var handler: Handler
     lateinit var params: WindowManager.LayoutParams
-    lateinit var CDT : CountDownTimer
-    var inputPeroid : Long = 0
-    var inputSustainTime : Long = 0
+    lateinit var CDT: CountDownTimer
+    var inputPeroid: Long = 0
+    var inputSustainTime: Long = 0
+    var inputColor: Int = 0
 
     var isOnView = false
 
@@ -63,15 +66,17 @@ class NormalService : Service() {
 
         inputPeroid = intent!!.getLongExtra("inputPeriod", 0)
         inputSustainTime = intent!!.getLongExtra("inputSustainTime", 0)
+        inputColor = intent!!.getIntExtra("inputColor", 0)
 
-        Toast.makeText(this, "$inputPeroid       $inputSustainTime", Toast.LENGTH_SHORT).show()
+        view.setBackgroundColor(Color.argb(inputColor, 0, 0, 0))
 
+        Toast.makeText(this, "$inputPeroid   $inputSustainTime  $inputColor", Toast.LENGTH_SHORT).show()
 
         //10분 기준 60000 * 10
         CDT = object : CountDownTimer((60000 * 10).toLong(), inputPeroid) {
             override fun onTick(millisUntilFinished: Long) {
 
-                if(Looper.myLooper() == null){
+                if (Looper.myLooper() == null) {
                     Looper.prepare()
                 }
                 addBlackView()
@@ -85,8 +90,6 @@ class NormalService : Service() {
             }
         }
         CDT.start() //CountDownTimer 실행
-
-
 
 
 //        var handler = Handler(Looper.getMainLooper())
