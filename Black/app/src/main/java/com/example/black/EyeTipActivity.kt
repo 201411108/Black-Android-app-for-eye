@@ -5,16 +5,16 @@
  * history
  * 20191123     handongkim      init
  * 20191124     handongkim      recyclerview item 클릭 기능 구현
+ * 20191127     handongkim      누른 버튼에 따라 알맞는 recyclerViewAdapter 적용
  */
 
 package com.example.black
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+
 import kotlinx.android.synthetic.main.activity_tips_view.*
 
 class EyeTipActivity : AppCompatActivity() {
@@ -23,43 +23,76 @@ class EyeTipActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tips_view)
 
-        // 추후 매개변수로 사용하기 위해 선언
-        val response = intent.getStringExtra("key")
-        tipTitle.text = response
+        val eyeTipData = EyeDataClass()
 
-        val tipRecyclerView : RecyclerView = findViewById(R.id.tipRecyclerView)
-        // TODO :: 넘겨받는 intent에 따라서 다른 결과를 가져오도록 만들어야 한다.
-        val recyclerAdapter = recyclerViewAdapter(this, EyeDataClass().eyeFoodInfo) {
-            Toast.makeText(this, "제목 : ${it.title}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, eachTipActivity::class.java)
-            intent.putExtra("id", it.id.toString())
-            intent.putExtra("title", it.title)
-            intent.putExtra("content", it.content)
-            startActivity(intent)
+        val dbKey = intent.getStringExtra("DBKEY")
+        val title = intent.getStringExtra("TITLE")
+
+        tipTitle.text = title
+
+        // TODO :: 넘겨주는 intent에 이미지 경로 추가
+        when(dbKey) {
+            "FOOD" -> {
+                val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
+                    val intent = Intent(this, eachTipActivity::class.java)
+                    intent.putExtra("id", it.id.toString())
+                    intent.putExtra("title", it.title)
+                    intent.putExtra("content", it.content)
+                    startActivity(intent)
+
+                }
+                tipRecyclerView.adapter = recyclerAdapter
+            }
+            "TEA" -> {
+                val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData.eyeTeaInfo) {
+                    val intent = Intent(this, eachTipActivity::class.java)
+                    intent.putExtra("id", it.id.toString())
+                    intent.putExtra("title", it.title)
+                    intent.putExtra("content", it.content)
+                    startActivity(intent)
+
+                }
+                tipRecyclerView.adapter = recyclerAdapter
+            }
+            "DRUG" -> {
+                val recyclerAdapter = DrugRecyclerAdapter(this, eyeTipData.eyeDrugInfo) {
+                    val intent = Intent(this, eachTipActivity::class.java)
+                    intent.putExtra("id", it.id.toString())
+                    intent.putExtra("title", it.title)
+                    intent.putExtra("content", it.content)
+                    startActivity(intent)
+
+                }
+                tipRecyclerView.adapter = recyclerAdapter
+            }
+            "EXCERCISE" -> {
+                val recyclerAdapter = ExcerciseRecyclerAdapter(this, eyeTipData.eyeExcerciseInfo) {
+                    val intent = Intent(this, eachTipActivity::class.java)
+                    intent.putExtra("id", it.id.toString())
+                    intent.putExtra("title", it.title)
+                    intent.putExtra("content", it.content)
+                    startActivity(intent)
+
+                }
+                tipRecyclerView.adapter = recyclerAdapter
+            }
+            "INFO" -> {
+                val recyclerAdapter = InfoRecyclerAdapter(this, eyeTipData.eyeInfo) {
+                    val intent = Intent(this, eachTipActivity::class.java)
+                    intent.putExtra("id", it.id.toString())
+                    intent.putExtra("title", it.title)
+                    intent.putExtra("content", it.content)
+                    startActivity(intent)
+
+                }
+                tipRecyclerView.adapter = recyclerAdapter
+            }
         }
-
-        tipRecyclerView.adapter = recyclerAdapter
 
         val lm = LinearLayoutManager(tipRecyclerView.context)
         tipRecyclerView.layoutManager = lm
         tipRecyclerView.setHasFixedSize(true)
-    }
 
-    // TODO :: DB구조에 따라 리팩토링
-//    fun getRightData(param:String) : recyclerViewAdapter {
-//        val param = intent.getStringExtra("key").toString()
-//
-//        when(param) {
-//            "눈에 좋은 음식" -> {
-//                return recyclerViewAdapter(this, EyeDataClass().eyeFoodInfo) {
-//                    Toast.makeText(this, "제목 : ${it.title}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//            "눈에 좋은 차(tea)" -> {
-//                return recyclerViewAdapter(this, EyeDataClass().eyeTeaInfo) {
-//                    Toast.makeText(this, "제목 : ${it.title}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
-}
+    } // end of onCreate
+
+} // end of class
