@@ -86,6 +86,11 @@ class MainActivity2 : AppCompatActivity() {
             startActivity(intent)
         }
 
+        isgBtn.setOnClickListener {
+            val intent = Intent(this, ISGTestActivity::class.java)
+            startActivity(intent)
+        }
+
         //TODO("seekbar 3개")
 
         var MainSeekBarListener = SeekBarListener()

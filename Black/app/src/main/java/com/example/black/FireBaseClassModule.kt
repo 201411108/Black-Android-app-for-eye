@@ -8,13 +8,13 @@ import com.google.firebase.database.ValueEventListener
 
 //폐기
 
-/*
+
 /*
  *  DB 내부 구조
  *  eyesaving (0: food, 1: tea ...)
  *  ㄴ food
  *      |
- *      key : int (increase Number, key)
+ *      key : String (name, key)
  *      ㄴ   name : String (이름)
  *      ㄴ   element: String(성분 예를들면 비타민C 같은거)
  *      ㄴ   effect: String (효과 이 음식이 어떻게 효과를 가져다 주는지)
@@ -31,13 +31,13 @@ class EyeSavingData(
     var name: String?,
     var element: String?,
     var effect: String?,
-    var cost: Int?,
-    var explain: String?,
-    var image: Drawable?
+    var cost: String?,
+    var explain: String?
+    //var image: Drawable?
 )
 
 enum class Category {
-    food, tea
+    food, tea, pill, exercise, tip
 }
 
 /*
@@ -48,6 +48,8 @@ enum class Category {
  *  Tips : getEyeSavingData 를 호출할 때 파라미터는 Category.food, Category.tea 등을 사용하면 편리합니다.
  *  사용예시 : getEyeSavingData(Category.food, "orange")   // food 카테고리 내 orange 음식의 데이터를 반환합니다.
  */
+
+/*
 public fun getEyeSavingData(categoryEnum: Category, name: String) : EyeSavingData? {
     var category: String?
     when(categoryEnum){
@@ -68,6 +70,8 @@ public fun getEyeSavingData(categoryEnum: Category, name: String) : EyeSavingDat
 }
 
 
+ */
+
 /*
  *  함수명 : setEyeSavingData (카테고리(food, tea 등), 카테고리 내 음식 이름, 음식에 대한 데이터)
  *  반환값 : X
@@ -81,8 +85,9 @@ public fun setEyeSavingData(categoryEnum: Category, name: String, data: EyeSavin
     when(categoryEnum){
         Category.food -> category = "food"
         Category.tea -> category = "tea"
+        Category.pill -> category = "pill"
+        Category.exercise -> category = "exercise"
+        Category.tip -> category = "tip"
     }
     database.child(category).child(name).setValue(data)
 }
-
-*/

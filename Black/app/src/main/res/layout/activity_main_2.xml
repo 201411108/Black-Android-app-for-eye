@@ -29,6 +29,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.102" />
 
+    <Button
+        android:id="@+id/isgBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setting Data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tipBtn"
+        app:layout_constraintVertical_bias="0.102" />
+
     <EditText
         android:id="@+id/colorText2"
         android:layout_width="match_parent"

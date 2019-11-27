@@ -1,15 +1,20 @@
 package com.example.black
 
+
+
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.drawable.Drawable
+import androidx.core.content.res.ResourcesCompat
 import androidx.room.Entity
 import androidx.room.*
 import org.jetbrains.anko.db.*
 import org.jetbrains.anko.*
+import java.io.File
+import java.util.*
 
 
 /*
@@ -39,7 +44,7 @@ data class EyeSaving(@PrimaryKey val name: String,
                      val effect: String,
                      val cost: Int,
                      val explain: String,
-                     //val image: Drawable?,
+                     val image: String,
                      val category: Int) //0: food, 1: tea, 2: ...
 
 @Dao
@@ -90,9 +95,32 @@ abstract class EyeSavingDatabase:RoomDatabase(){
     }
 }
 
-class RoomDBModule{
-
+fun encoder(filePath: String): String{
+    val bytes = File(filePath).readBytes()
+    val test: Drawable? = null
+    val base64 = Base64.getEncoder().encodeToString(bytes)
+    return base64
 }
+
+fun decoder(base64Str: String, pathFile: String): Unit{
+    val imageByteArray = Base64.getDecoder().decode(base64Str)
+    File(pathFile).writeBytes(imageByteArray)
+}
+
+/*
+class Converters {
+    @TypeConverter
+    fun fromTimestamp(value: String?): Drawable? {
+        return value?.let { Date(it) }
+    }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Drawable?): String? {
+        return date?.time?.toLong()
+    }
+}
+ */
 
 
 //ANKO Library : https://github.com/Kotlin/anko/wiki/Anko-SQLite
+

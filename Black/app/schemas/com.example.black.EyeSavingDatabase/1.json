@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a5f5b848543c911c6e9c4715555ec5bb",
+    "identityHash": "f44ee7cedbf413e6846f43e4846a4891",
     "entities": [
       {
         "tableName": "eyesaving",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `element` TEXT NOT NULL, `effect` TEXT NOT NULL, `cost` INTEGER NOT NULL, `explain` TEXT NOT NULL, `category` INTEGER NOT NULL, PRIMARY KEY(`name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `element` TEXT NOT NULL, `effect` TEXT NOT NULL, `cost` INTEGER NOT NULL, `explain` TEXT NOT NULL, `image` TEXT NOT NULL, `category` INTEGER NOT NULL, PRIMARY KEY(`name`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -39,6 +39,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "category",
             "columnName": "category",
             "affinity": "INTEGER",
@@ -58,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5f5b848543c911c6e9c4715555ec5bb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f44ee7cedbf413e6846f43e4846a4891')"
     ]
   }
 }
