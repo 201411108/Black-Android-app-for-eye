@@ -13,38 +13,71 @@
 
 package com.example.black
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_2.*
 
 class MainActivity2 : AppCompatActivity() {
 
-    var isRunning = true
+    var isRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_2)
 
+        //어플리케이션 실행 시 서비스가 실행중인지 확인, 실행중이면 이미지 크기를 큰것으로 교체
+        if (checkState()) {
+            kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground)
+            isRunning = true
+        }
+
         turnOnBtn.setOnClickListener {
 
-            if(isRunning) {
+            //Overlay 권한 확인
+            if (!Settings.canDrawOverlays(this)) {
+                startActivity(
+                    Intent(
+                        "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+                        Uri.parse("package:" + getPackageName())
+                    )
+                )
+            }
+
+
+//            TODO("이미지 selector할지, 한다면 뭐로 할지")
+
+            //중지 -> 실행
+            if(!isRunning) {
                 // Toast.makeText(this, "서비스 실행되며 종료 버튼으로 전환 " + onOffChecker, Toast.LENGTH_SHORT).show()
 
                 // 모든 값이 입력되어야 서비스 실행
                 // 입력하지 않을 경우 토스트 메세지 발생
-                isRunning = startServiceWhenNotNull(isRunning, periodText2.text.toString(), sustainTimeText2.text.toString(), colorText2.text.toString())
+//                isRunning = !startServiceWhenNotNull(!isRunning, periodText2.text.toString(), sustainTimeText2.text.toString(), colorText2.text.toString())
 
-            } else {
+                isRunning = !startServiceWhenNotNull(!isRunning, periodText2.text.toString(), sustainTimeText2.text.toString(), seekBarTest.progress.toString())
+
+
+                isRunning = true;
+            }
+
+            //실행 -> 중지
+            else {
                 // Toast.makeText(this, "서비스 종료하며 시작 버튼으로 전환 " + onOffChecker, Toast.LENGTH_SHORT).show()
                 // 구글이 서비스 실행 안되고 있는 중 -> 시작 버튼
                 turnOnBtn.setImageResource(R.drawable.common_google_signin_btn_icon_light)
 
                 // 서비스 중지
                 stopService(Intent(this, NormalService::class.java))
-
-                isRunning = true
+                isRunning = false
             }
         }
 
@@ -52,6 +85,12 @@ class MainActivity2 : AppCompatActivity() {
             val intent = Intent(this, EyeTipSelectActivity::class.java)
             startActivity(intent)
         }
+
+        //TODO("seekbar 3개")
+
+        var MainSeekBarListener = SeekBarListener()
+        seekBarTest.setOnSeekBarChangeListener(MainSeekBarListener)
+
 
     } // end of onCreate
 
@@ -78,5 +117,29 @@ class MainActivity2 : AppCompatActivity() {
         return isRunning
 
     } // end of startServiceWhenNotNull
+
+    //서비스가 이미 실행중인지 확인하는 함수
+    fun checkState(): Boolean {
+        for(service in (getSystemService(Context.ACTIVITY_SERVICE)as ActivityManager).getRunningServices(Integer.MAX_VALUE)){
+            if (NormalService::class.java.name == service.service.className) {
+                return true
+            }
+        }
+        return false
+    }
+
+    inner class SeekBarListener : SeekBar.OnSeekBarChangeListener{
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            seekBarText.text = progress.toString()
+            seekBarTest.progress = (progress/10)*10
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+        }
+
+    }
 
 } // end of class
