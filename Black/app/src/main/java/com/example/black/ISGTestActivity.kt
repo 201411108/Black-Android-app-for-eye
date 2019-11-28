@@ -1,21 +1,27 @@
 package com.example.black
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.accessibility.AccessibilityViewCommand
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_tips_view.*
 import kotlinx.android.synthetic.main.isg_test_activity.*
 import kotlin.random.Random
@@ -59,6 +65,21 @@ class ISGTestActivity : AppCompatActivity() {
         }
       ROOM */
 
+
+        //Image
+        /*
+        val dRef = FirebaseStorage.getInstance().getReference()
+        val dBlueberryImage = dRef.child("blueberry.jpg")
+        val test = dBlueberryImage.downloadUrl.addOnSuccessListener {
+            Glide.with(this).load(it).into(imgTestView)
+        }.addOnFailureListener{
+            imgTestView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher_round, null))
+        }
+
+         */
+
+
+        // Database
 
         val database = FirebaseDatabase.getInstance()
         val eDB = database.getReference("eyesaving")
@@ -116,12 +137,25 @@ class ISGTestActivity : AppCompatActivity() {
         }
 
         isgTestButton2.setOnClickListener {
-            val val2 = value?.getValue(cName)?.getValue(keyET.text.toString())
-            nameET.setText(val2?.getValue("name").toString())
-            elementET.setText(val2?.getValue("element").toString())
-            effectET.setText(val2?.getValue("effect").toString())
-            costET.setText(val2?.getValue("cost").toString())
-            explainET.setText(val2?.getValue("explain").toString())
+            if(keyET.text.isEmpty())
+                Toast.makeText(this, "Please Input Key Value", Toast.LENGTH_LONG).show()
+            else{
+                val val2 = value?.getValue(cName)?.getValue(keyET.text.toString())
+                nameET.setText(val2?.getValue("name").toString())
+                elementET.setText(val2?.getValue("element").toString())
+                effectET.setText(val2?.getValue("effect").toString())
+                costET.setText(val2?.getValue("cost").toString())
+                explainET.setText(val2?.getValue("explain").toString())
+
+                val dRef = FirebaseStorage.getInstance().getReference()
+                var imagePath = keyET.text.toString() + ".jpg"
+                val dImage = dRef.child(imagePath)
+                val test = dImage.downloadUrl.addOnSuccessListener {
+                    Glide.with(this).load(it).into(isgTestImage)
+                }.addOnFailureListener{
+                    isgTestImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher_round, null))
+                }
+            }
         }
 
 
