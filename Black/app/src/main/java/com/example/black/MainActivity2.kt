@@ -22,7 +22,6 @@ import android.provider.Settings
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_2.*
 
@@ -63,7 +62,7 @@ class MainActivity2 : AppCompatActivity() {
                 // 입력하지 않을 경우 토스트 메세지 발생
 //                isRunning = !startServiceWhenNotNull(!isRunning, periodText2.text.toString(), sustainTimeText2.text.toString(), colorText2.text.toString())
 
-                isRunning = !startServiceWhenNotNull(!isRunning, periodText2.text.toString(), sustainTimeText2.text.toString(), seekBarTest.progress.toString())
+                isRunning = !startServiceWhenNotNull(!isRunning, periodSeekBar.progress.toString(), sustainSeekBar.progress.toString(), colorSeekBar.progress.toString())
 
 
                 isRunning = true;
@@ -94,16 +93,18 @@ class MainActivity2 : AppCompatActivity() {
         //TODO("seekbar 3개")
 
         var MainSeekBarListener = SeekBarListener()
-        seekBarTest.setOnSeekBarChangeListener(MainSeekBarListener)
+        colorSeekBar.setOnSeekBarChangeListener(MainSeekBarListener)
 
 
     } // end of onCreate
 
+    // TODO :: SeekBar로 변경하며 필요 없어짐
     private fun startServiceWhenNotNull(flag : Boolean, periodText : String, sustainTime : String, colorText : String) : Boolean {
 
         var isRunning= true
 
         if(flag) {
+
             if(periodText != "" && sustainTime != "" && colorText != "") {
 
                 val intent = Intent(this, NormalService::class.java)
@@ -135,8 +136,8 @@ class MainActivity2 : AppCompatActivity() {
 
     inner class SeekBarListener : SeekBar.OnSeekBarChangeListener{
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            seekBarText.text = progress.toString()
-            seekBarTest.progress = (progress/10)*10
+            colorSeekBarText.text = progress.toString()
+            colorSeekBar.progress = (progress/10)*10
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
