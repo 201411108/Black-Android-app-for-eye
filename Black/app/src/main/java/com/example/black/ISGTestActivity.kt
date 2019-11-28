@@ -69,22 +69,6 @@ class ISGTestActivity : AppCompatActivity() {
                 value = p0.getValue() as Map<String, Map<String, Any>>
                 val value2 = value!!.keys
                 isgTestTextView.text = "key is $value2"
-                //val eDataStream = p0.getValue() as Map<String, EyeSavingData?>
-                //val eData = eDataStream.getValue("orange").toString() as Map<String, Any>
-                //isgTestTextView.text = eDataStream.getValue("orange").toString()
-                //isgTestTextView.text = eData.getValue("name").toString()
-
-                //val testMap = p0.getValue() as Map<String, EyeSavingData?>
-                //val testData = testMap.getValue("orange")
-                //isgTestTextView.text = testData.toString()
-                //val retData = eDataString.get("orange") //Get 이후 EyeSavingData 자료 다루는데서 오류 발생
-
-                //if(retData != null)
-                //    isgTestTextView.text = retData.name + retData.element
-                //else
-                //    isgTestTextView.text = "Cannot Find Data"
-
-
             }
         })
 
