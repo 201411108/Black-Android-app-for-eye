@@ -20,6 +20,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,7 +36,7 @@ class MainActivity2 : AppCompatActivity() {
 
         //어플리케이션 실행 시 서비스가 실행중인지 확인, 실행중이면 이미지 크기를 큰것으로 교체
         if (checkState()) {
-            kkmTestImage.setBackgroundResource(R.drawable.ic_launcher_foreground)
+            turnOnBtn.setImageResource(R.drawable.ic_launcher_foreground)
             isRunning = true
         }
 
@@ -50,8 +51,6 @@ class MainActivity2 : AppCompatActivity() {
                     )
                 )
             }
-
-
 //            TODO("이미지 selector할지, 한다면 뭐로 할지")
 
             //중지 -> 실행
@@ -61,8 +60,15 @@ class MainActivity2 : AppCompatActivity() {
                 // 모든 값이 입력되어야 서비스 실행
                 // 입력하지 않을 경우 토스트 메세지 발생
 //                isRunning = !startServiceWhenNotNull(!isRunning, periodText2.text.toString(), sustainTimeText2.text.toString(), colorText2.text.toString())
+                //isRunning = !startServiceWhenNotNull(!isRunning, periodSeekBar.progress.toString(), sustainSeekBar.progress.toString(), colorSeekBar.progress.toString())
 
-                isRunning = !startServiceWhenNotNull(!isRunning, periodSeekBar.progress.toString(), sustainSeekBar.progress.toString(), colorSeekBar.progress.toString())
+                val intent = Intent(this, NormalService::class.java)
+                intent.putExtra("inputPeriod", periodSeekBar.progress.toString().toLong()*1000)
+                intent.putExtra("inputSustainTime", sustainTimeSeekBar.progress.toString().toLong())
+                intent.putExtra("inputColor", colorSeekBar.progress.toString().toInt())
+                startService(intent)
+                // 서비스 시작 후 이미지 변경(안드로이가 서비스 실행 중 -> 중지 버튼)
+                turnOnBtn.setImageResource(R.drawable.ic_launcher_foreground)
 
 
                 isRunning = true;
@@ -91,38 +97,13 @@ class MainActivity2 : AppCompatActivity() {
         }
 
         //TODO("seekbar 3개")
-
-        var MainSeekBarListener = SeekBarListener()
-        colorSeekBar.setOnSeekBarChangeListener(MainSeekBarListener)
-
+        periodSeekBar.setOnSeekBarChangeListener(PeriodSeekBarListener())
+        sustainTimeSeekBar.setOnSeekBarChangeListener(SustainTimeSeekBarListener())
+        colorSeekBar.setOnSeekBarChangeListener(ColorSeekBarListener())
 
     } // end of onCreate
 
     // TODO :: SeekBar로 변경하며 필요 없어짐
-    private fun startServiceWhenNotNull(flag : Boolean, periodText : String, sustainTime : String, colorText : String) : Boolean {
-
-        var isRunning= true
-
-        if(flag) {
-
-            if(periodText != "" && sustainTime != "" && colorText != "") {
-
-                val intent = Intent(this, NormalService::class.java)
-                intent.putExtra("inputPeriod", periodText.toLong())
-                intent.putExtra("inputSustainTime", sustainTime.toLong())
-                intent.putExtra("inputColor", colorText.toInt())
-                startService(intent)
-                // 서비스 시작 후 이미지 변경(안드로이가 서비스 실행 중 -> 중지 버튼)
-                turnOnBtn.setImageResource(R.drawable.ic_launcher_foreground)
-                isRunning = false
-
-            } else {
-                Toast.makeText(this, "모든 칸을 입력하세요.", Toast.LENGTH_LONG).show()
-            }
-        }
-        return isRunning
-
-    } // end of startServiceWhenNotNull
 
     //서비스가 이미 실행중인지 확인하는 함수
     fun checkState(): Boolean {
@@ -134,10 +115,11 @@ class MainActivity2 : AppCompatActivity() {
         return false
     }
 
-    inner class SeekBarListener : SeekBar.OnSeekBarChangeListener{
+    inner class PeriodSeekBarListener : SeekBar.OnSeekBarChangeListener{
+
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            colorSeekBarText.text = progress.toString()
-            colorSeekBar.progress = (progress/10)*10
+            periodSeekBar.progress = progress
+            periodSeekBarText.text = "${seekBar?.progress.toString()}초"
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -145,7 +127,34 @@ class MainActivity2 : AppCompatActivity() {
 
         override fun onStopTrackingTouch(seekBar: SeekBar?) {
         }
+    }
 
+    inner class SustainTimeSeekBarListener : SeekBar.OnSeekBarChangeListener{
+
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            seekBar?.progress = (progress/10)*10
+            sustainTimeSeekBarText.text = "${seekBar?.progress.toString()}ms"
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+        }
+    }
+
+    inner class ColorSeekBarListener : SeekBar.OnSeekBarChangeListener{
+
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            seekBar?.progress = (progress/10)*10
+            colorSeekBarText.text = "${seekBar?.progress.toString()}%"
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+        }
     }
 
 } // end of class

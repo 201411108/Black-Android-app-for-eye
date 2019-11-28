@@ -64,9 +64,9 @@ class NormalService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Toast.makeText(this, "서비스 실행", Toast.LENGTH_SHORT).show()
 
-        inputPeroid = intent!!.getLongExtra("inputPeriod", 0)
-        inputSustainTime = intent!!.getLongExtra("inputSustainTime", 0)
-        inputColor = intent!!.getIntExtra("inputColor", 0)
+        inputPeroid = intent!!.getLongExtra("inputPeriod", 1000)
+        inputSustainTime = intent!!.getLongExtra("inputSustainTime", 500)
+        inputColor = intent!!.getIntExtra("inputColor", 99)
 
         view.setBackgroundColor(Color.argb(inputColor, 0, 0, 0))
 
