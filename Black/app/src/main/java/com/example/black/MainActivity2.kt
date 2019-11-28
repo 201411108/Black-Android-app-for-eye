@@ -36,7 +36,7 @@ class MainActivity2 : AppCompatActivity() {
 
         //어플리케이션 실행 시 서비스가 실행중인지 확인, 실행중이면 이미지 크기를 큰것으로 교체
         if (checkState()) {
-            turnOnBtn.setImageResource(R.drawable.ic_launcher_foreground)
+            turnOnBtn.setImageResource(R.drawable.end_button)
             isRunning = true
         }
 
@@ -68,7 +68,7 @@ class MainActivity2 : AppCompatActivity() {
                 intent.putExtra("inputColor", colorSeekBar.progress.toString().toInt())
                 startService(intent)
                 // 서비스 시작 후 이미지 변경(안드로이가 서비스 실행 중 -> 중지 버튼)
-                turnOnBtn.setImageResource(R.drawable.ic_launcher_foreground)
+                turnOnBtn.setImageResource(R.drawable.end_button)
 
 
                 isRunning = true;
@@ -78,7 +78,7 @@ class MainActivity2 : AppCompatActivity() {
             else {
                 // Toast.makeText(this, "서비스 종료하며 시작 버튼으로 전환 " + onOffChecker, Toast.LENGTH_SHORT).show()
                 // 구글이 서비스 실행 안되고 있는 중 -> 시작 버튼
-                turnOnBtn.setImageResource(R.drawable.common_google_signin_btn_icon_light)
+                turnOnBtn.setImageResource(R.drawable.start_button)
 
                 // 서비스 중지
                 stopService(Intent(this, NormalService::class.java))
