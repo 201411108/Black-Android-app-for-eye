@@ -5,6 +5,7 @@
  * history
  * 20191123     handongkim      init
  * 20191127     handongkim      data에 따른 recyclerViewAdapter 생성
+ * 20191128     handongkim      db 연동 성공
  */
 
 package com.example.black
@@ -13,8 +14,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.isg_test_activity.*
 
 class TestRecyclerAdapter(val context : Context, val data : ArrayList<EyeDataClass.testClass>, val itemClick : (EyeDataClass.testClass) -> Unit)
     : RecyclerView.Adapter<TestRecyclerAdapter.Holder>() {
@@ -35,9 +41,15 @@ class TestRecyclerAdapter(val context : Context, val data : ArrayList<EyeDataCla
     inner class Holder(itemView: View, itemclick: (EyeDataClass.testClass) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
         val itemTitle = itemView.findViewById<TextView>(R.id.itemTitle)
+        val itemImage = itemView.findViewById<ImageView>(R.id.itemImage)
 
         fun bind(data: EyeDataClass.testClass, context: Context) {
             itemTitle.text = data.name
+            FirebaseStorage.getInstance().getReference().child(data.imagePath).downloadUrl.addOnSuccessListener {
+                Glide.with(context).load(it).into(itemImage)
+            }.addOnFailureListener{
+                itemImage.setImageResource(R.drawable.ic_launcher_foreground)
+            }
 
             itemView.setOnClickListener {
                 itemClick(data)

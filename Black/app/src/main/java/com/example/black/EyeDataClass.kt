@@ -5,6 +5,7 @@
  * history
  * 20191123     handongkim      init
  * 20191127     handongkim      테스트 데이터 추가
+ * 20191128     handongkim      db 연동 성공
  */
 
 package com.example.black
@@ -20,6 +21,9 @@ import kotlinx.android.synthetic.main.isg_test_activity.*
 
 class EyeDataClass(var value : Map<String, Map<String, Map<String, Any>>>?) {
 
+
+    inner class testClass(val name : String, val element : String, val effect : String, val cost : String, val explain : String,
+                          val imagePath : String)
     // TODO :: DB 구조에 맞게 inner class 변형
     inner class EyeFood(val id : Int, val title : String, val content : String)
     inner class EyeTea(val id : Int, val title : String, val content : String)
@@ -82,12 +86,12 @@ class EyeDataClass(var value : Map<String, Map<String, Map<String, Any>>>?) {
 //    })
 
     var dbKey = "food"
-
-    // 해당 데이터베이스에 속하는 item키들을 가져온다.
+//
+//    // 해당 데이터베이스에 속하는 item키들을 가져온다.
     val itemSet = value?.getValue(dbKey)?.keys
-
-    inner class testClass(val name : String, val element : String, val effect : String, val cost : String, val explain : String,
-                          val imagePath : String)
+//
+//    inner class testClass(val name : String, val element : String, val effect : String, val cost : String, val explain : String,
+//                          val imagePath : String)
     var testInfo = arrayListOf<testClass>()
 
     private fun makeClassArray(itemSet: Set<String>?, testInfo: ArrayList<testClass>): ArrayList<testClass> {
