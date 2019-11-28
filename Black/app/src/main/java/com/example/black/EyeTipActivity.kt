@@ -12,10 +12,16 @@ package com.example.black
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_tips_view.*
+import kotlinx.android.synthetic.main.isg_test_activity.*
+import kotlin.random.Random
 
 class EyeTipActivity : AppCompatActivity() {
 
@@ -23,21 +29,36 @@ class EyeTipActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tips_view)
 
-        val eyeTipData = EyeDataClass()
+        val database = FirebaseDatabase.getInstance()
+        val eDB = database.getReference("eyesaving")
+        var value: Map<String, Map<String, Map<String, Any>>>? = null
+
+        eDB.addValueEventListener(object : ValueEventListener {
+
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(p0: DataSnapshot) {
+                value = p0.getValue() as Map<String, Map<String, Map<String, Any>>>
+                Log.d("DBTEST", value.toString())
+            }
+        })
+
+        val eyeTipData = EyeDataClass(value)
 
         val dbKey = intent.getStringExtra("DBKEY")
         val title = intent.getStringExtra("TITLE")
 
         tipTitle.text = title
 
-        // TODO :: 넘겨주는 intent에 이미지 경로 추가
-        when(dbKey) {
+        when (dbKey) {
             "FOOD" -> {
-                val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
+                val recyclerAdapter = TestRecyclerAdapter(this, eyeTipData.testResultInfo) {
+                    //                val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
                     val intent = Intent(this, eachTipActivity::class.java)
-                    intent.putExtra("id", it.id.toString())
-                    intent.putExtra("title", it.title)
-                    intent.putExtra("content", it.content)
+//                    intent.putExtra("id", it.id.toString())
+//                    intent.putExtra("title", it.title)
+//                    intent.putExtra("content", it.content)
+                    intent.putExtra("title", it.name)
                     startActivity(intent)
 
                 }

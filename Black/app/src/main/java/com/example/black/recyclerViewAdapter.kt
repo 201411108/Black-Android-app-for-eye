@@ -16,6 +16,36 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+class TestRecyclerAdapter(val context : Context, val data : ArrayList<EyeDataClass.testClass>, val itemClick : (EyeDataClass.testClass) -> Unit)
+    : RecyclerView.Adapter<TestRecyclerAdapter.Holder>() {
+
+    override fun getItemCount(): Int {
+        return data.size
+    }
+
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+        holder.bind(data[position], context)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        val view = LayoutInflater.from(context).inflate(R.layout.tip_recyclerview_item, parent, false)
+        return Holder(view, itemClick)
+    }
+
+    inner class Holder(itemView: View, itemclick: (EyeDataClass.testClass) -> Unit) : RecyclerView.ViewHolder(itemView) {
+
+        val itemTitle = itemView.findViewById<TextView>(R.id.itemTitle)
+
+        fun bind(data: EyeDataClass.testClass, context: Context) {
+            itemTitle.text = data.name
+
+            itemView.setOnClickListener {
+                itemClick(data)
+            }
+        }
+    }
+}
+
 class FoodRecyclerAdapter(val context : Context, val data : ArrayList<EyeDataClass.EyeFood>, val itemClick : (EyeDataClass.EyeFood) -> Unit)
     : RecyclerView.Adapter<FoodRecyclerAdapter.Holder>() {
 

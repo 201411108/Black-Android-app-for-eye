@@ -83,6 +83,7 @@ class ISGTestActivity : AppCompatActivity() {
 
         val database = FirebaseDatabase.getInstance()
         val eDB = database.getReference("eyesaving")
+        // Map<DBID, Map<ItemName, Map<관련 키, 정보>
         var value: Map<String, Map<String, Map<String, Any>>>? = null
         var cName: String = "food"
 
@@ -92,11 +93,13 @@ class ISGTestActivity : AppCompatActivity() {
             }
             override fun onDataChange(p0: DataSnapshot) {
                 value = p0.getValue() as Map<String, Map<String, Map<String, Any>>>
+                // NOTICE :: 해당 DB에 있는 아이템들을 가져온다.
                 val value2 = value!!.getValue(cName).keys
                 isgTestTextView.text = "key is $value2"
             }
         })
 
+        // Not used
         RBgroup.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
                 when(RBgroup.checkedRadioButtonId){
@@ -110,6 +113,7 @@ class ISGTestActivity : AppCompatActivity() {
             }
         )
 
+        // not used
         isgTestButton.setOnClickListener {
             //eDB.child("food").child("test").setValue(EyeSavingData("name", "element", "effect", 1234, "explain", resources.getDrawable(R.mipmap.ic_launcher_round)))
             var categoryName: Category = Category.food
@@ -136,6 +140,7 @@ class ISGTestActivity : AppCompatActivity() {
              */
         }
 
+        // getter
         isgTestButton2.setOnClickListener {
             if(keyET.text.isEmpty())
                 Toast.makeText(this, "Please Input Key Value", Toast.LENGTH_LONG).show()
@@ -156,6 +161,7 @@ class ISGTestActivity : AppCompatActivity() {
                     isgTestImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher_round, null))
                 }
             }
+
         }
 
 
