@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/isgTestImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        />
+        android:layout_width="176dp"
+        android:layout_height="165dp"
+        android:layout_gravity="center"
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/isgTestTextView"
@@ -135,7 +135,11 @@
         android:inputType="text"
         android:hint="explain" />
 
-
+    <ImageView
+        android:id="@+id/imgTestView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
 
 </LinearLayout>
