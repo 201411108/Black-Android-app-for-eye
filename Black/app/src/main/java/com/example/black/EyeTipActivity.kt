@@ -13,7 +13,7 @@ package com.example.black
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -21,19 +21,26 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_tips_view.*
-import kotlinx.android.synthetic.main.isg_test_activity.*
 import kotlin.random.Random
 
 class EyeTipActivity : AppCompatActivity() {
+
+    val IMAGEPATH = "IMAGEPATH"
+    val NAME = "NAME"
+    val COST = "COST"
+    val ELEMENT = "ELEMENT"
+    val EFFECT = "EFFECT"
+    val EXPLAIN = "EXPLAIN"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tips_view)
 
+        Toast.makeText(this, "데이터를 가져오려면 제목을 누르세요.", Toast.LENGTH_LONG).show()
+
         val database = FirebaseDatabase.getInstance()
         val eDB = database.getReference("eyesaving")
         var value: Map<String, Map<String, Map<String, Any>>>? = null
-
 
         eDB.addValueEventListener(object : ValueEventListener {
 
@@ -41,30 +48,48 @@ class EyeTipActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 value = p0.getValue() as Map<String, Map<String, Map<String, Any>>>
-//                Log.d("DBTEST", value.toString())
-
             }
         })
-
-//        val eyeTipData = EyeDataClass()
-//        var eyeTipData : EyeDataClass? = null
 
         val dbKey = intent.getStringExtra("DBKEY")
         val title = intent.getStringExtra("TITLE")
 
         tipTitle.text = title
+
         tipTitle.setOnClickListener {
             eDB.child("refresh").setValue(Random(100).toString())
-            Log.d("DBOUTERTEST", value.toString())
+            // Log.d("DBOUTERTEST", value.toString())
 
             val eyeTipData = EyeDataClass(value)
 
-            val recyclerAdapter = TestRecyclerAdapter(this, eyeTipData.testResultInfo) {
-                val intent = Intent(this, eachTipActivity::class.java)
-                intent.putExtra("title", it.name)
-                startActivity(intent)
+            when(dbKey) {
+                "FOOD" -> {
+                    val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
+                        val intent = Intent(this, eachTipActivity::class.java)
+                        intent.putExtra(IMAGEPATH, it.imagePath)
+                        intent.putExtra(NAME, it.name)
+                        intent.putExtra(COST, it.cost)
+                        intent.putExtra(ELEMENT, it.element)
+                        intent.putExtra(EFFECT, it.effect)
+                        intent.putExtra(EXPLAIN, it.explain)
+                        startActivity(intent)
+                    }
+                    tipRecyclerView.adapter = recyclerAdapter
+                }
+                "TEA" -> {
+                    val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData.eyeTeaInfo) {
+                        val intent = Intent(this, eachTipActivity::class.java)
+                        intent.putExtra(IMAGEPATH, it.imagePath)
+                        intent.putExtra(NAME, it.name)
+                        intent.putExtra(COST, it.cost)
+                        intent.putExtra(ELEMENT, it.element)
+                        intent.putExtra(EFFECT, it.effect)
+                        intent.putExtra(EXPLAIN, it.explain)
+                        startActivity(intent)
+                    }
+                    tipRecyclerView.adapter = recyclerAdapter
+                }
             }
-            tipRecyclerView.adapter = recyclerAdapter
 
             val lm = LinearLayoutManager(tipRecyclerView.context)
             tipRecyclerView.layoutManager = lm
@@ -130,8 +155,6 @@ class EyeTipActivity : AppCompatActivity() {
 //                tipRecyclerView.adapter = recyclerAdapter
 //            }
 //        }
-
-
 
     } // end of onCreate
 
