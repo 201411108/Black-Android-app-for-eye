@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.accessibility.AccessibilityViewCommand
@@ -16,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_tips_view.*
 import kotlinx.android.synthetic.main.isg_test_activity.*
+import kotlin.random.Random
 
 class ISGTestActivity : AppCompatActivity() {
 
@@ -59,20 +62,32 @@ class ISGTestActivity : AppCompatActivity() {
 
         val database = FirebaseDatabase.getInstance()
         val eDB = database.getReference("eyesaving")
-        var value: Map<String, Map<String, Any>>? = null
+        var value: Map<String, Map<String, Map<String, Any>>>? = null
+        var cName: String = "food"
 
-        val eData = eDB.child("food").addValueEventListener(object: ValueEventListener {
+        val eDataTest = eDB.addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 isgTestTextView.text = p0.toException().toString()
             }
             override fun onDataChange(p0: DataSnapshot) {
-                value = p0.getValue() as Map<String, Map<String, Any>>
-                val value2 = value!!.keys
+                value = p0.getValue() as Map<String, Map<String, Map<String, Any>>>
+                val value2 = value!!.getValue(cName).keys
                 isgTestTextView.text = "key is $value2"
             }
         })
 
-
+        RBgroup.setOnCheckedChangeListener(
+            RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                when(RBgroup.checkedRadioButtonId){
+                    foodRB.id -> cName = "food"
+                    teaRB.id -> cName = "tea"
+                    pillRB.id -> cName = "pill"
+                    exerciseRB.id -> cName = "exercise"
+                    tipRB.id -> cName = "tip"
+                }
+                eDB.child("refresh").setValue(Random(10).toString())
+            }
+        )
 
         isgTestButton.setOnClickListener {
             //eDB.child("food").child("test").setValue(EyeSavingData("name", "element", "effect", 1234, "explain", resources.getDrawable(R.mipmap.ic_launcher_round)))
@@ -101,7 +116,7 @@ class ISGTestActivity : AppCompatActivity() {
         }
 
         isgTestButton2.setOnClickListener {
-            val val2 = value?.getValue(keyET.text.toString())
+            val val2 = value?.getValue(cName)?.getValue(keyET.text.toString())
             nameET.setText(val2?.getValue("name").toString())
             elementET.setText(val2?.getValue("element").toString())
             effectET.setText(val2?.getValue("effect").toString())
