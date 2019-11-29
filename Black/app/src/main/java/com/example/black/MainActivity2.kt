@@ -36,7 +36,7 @@ class MainActivity2 : AppCompatActivity() {
 
         //어플리케이션 실행 시 서비스가 실행중인지 확인, 실행중이면 이미지 크기를 큰것으로 교체
         if (checkState()) {
-            turnOnBtn.setImageResource(R.drawable.end_button)
+            turnOnBtn.setImageResource(R.drawable.end_button2)
             isRunning = true
         }
 
@@ -65,10 +65,10 @@ class MainActivity2 : AppCompatActivity() {
                 val intent = Intent(this, NormalService::class.java)
                 intent.putExtra("inputPeriod", periodSeekBar.progress.toString().toLong()*1000)
                 intent.putExtra("inputSustainTime", sustainTimeSeekBar.progress.toString().toLong())
-                intent.putExtra("inputColor", colorSeekBar.progress.toString().toInt())
+                intent.putExtra("inputColor", colorSeekBar.progress.toString().toInt()*250/100)
                 startService(intent)
                 // 서비스 시작 후 이미지 변경(안드로이가 서비스 실행 중 -> 중지 버튼)
-                turnOnBtn.setImageResource(R.drawable.end_button)
+                turnOnBtn.setImageResource(R.drawable.end_button2)
 
 
                 isRunning = true;

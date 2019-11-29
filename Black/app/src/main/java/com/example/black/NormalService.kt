@@ -73,7 +73,7 @@ class NormalService : Service() {
         Toast.makeText(this, "$inputPeroid   $inputSustainTime  $inputColor", Toast.LENGTH_SHORT).show()
 
         //10분 기준 60000 * 10
-        CDT = object : CountDownTimer((60000 * 10).toLong(), inputPeroid) {
+        CDT = object : CountDownTimer((600000 * 10).toLong(), inputPeroid) {
             override fun onTick(millisUntilFinished: Long) {
 
                 if (Looper.myLooper() == null) {

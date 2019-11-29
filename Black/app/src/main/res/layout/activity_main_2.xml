@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_back">
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/v1">
 
     <ImageButton
         android:id="@+id/turnOnBtn"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:scaleType="fitCenter"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:background="@drawable/start_button"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -42,66 +43,59 @@
         app:layout_constraintTop_toBottomOf="@id/tipBtn"
         app:layout_constraintVertical_bias="0.102" />
 
+    <TextView
+        android:id="@+id/colorSeekBarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="투명도 0~100%"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/turnOnBtn" />
+
     <SeekBar
         android:id="@+id/colorSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
         android:max="100"
         android:min="0"
         android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress"
         android:thumb="@drawable/seekbar_thumb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/turnOnBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/colorSeekBarText" />
 
     <TextView
-        android:id="@+id/colorSeekBarText"
+        android:id="@+id/periodSeekBarText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="투명도 0~100%"
+        android:layout_marginTop="30dp"
+        android:text="주기 1~60초"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorSeekBar" />
+        app:layout_constraintTop_toBottomOf="@id/colorSeekBar" />
 
     <SeekBar
         android:id="@+id/periodSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
         android:max="60"
         android:min="1"
         android:progress="10"
-        android:thumb="@drawable/seekbar_thumb"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/colorSeekBarText" />
-
-    <TextView
-        android:id="@+id/periodSeekBarText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="주기 1~60초"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/periodSeekBar" />
-
-    <SeekBar
-        android:id="@+id/sustainTimeSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
-        android:max="500"
-        android:min="100"
-        android:progress="200"
+        android:progressDrawable="@drawable/seekbar_progress"
         android:thumb="@drawable/seekbar_thumb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,13 +105,33 @@
         android:id="@+id/sustainTimeSeekBarText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
         android:text="지속시간 100~500ms"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sustainTimeSeekBar"
+        app:layout_constraintTop_toBottomOf="@id/periodSeekBar"
         app:layout_constraintVertical_bias="0.0" />
+
+    <SeekBar
+        android:id="@+id/sustainTimeSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:max="500"
+        android:min="100"
+        android:progress="200"
+        android:progressDrawable="@drawable/seekbar_progress"
+        android:thumb="@drawable/seekbar_thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sustainTimeSeekBarText" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
