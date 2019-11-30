@@ -7,6 +7,7 @@
  * 20191124     handongkim      recyclerview item 클릭 기능 구현
  * 20191127     handongkim      누른 버튼에 따라 알맞는 recyclerViewAdapter 적용
  * 20191128     handongkim      DB 연동 성공
+ * 20191130     handongkim      데이터베이스 불러오기 예외처리
  */
 
 package com.example.black
@@ -80,7 +81,7 @@ class EyeTipActivity : AppCompatActivity() {
                         tipRecyclerView.adapter = recyclerAdapter
                     }
                     "TEA" -> {
-                        val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData!!.eyeTeaInfo) {
+                        val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData.eyeTeaInfo) {
                             val intent = Intent(this, eachTipActivity::class.java)
                             intent.putExtra(IMAGEPATH, it.imagePath)
                             intent.putExtra(NAME, it.name)
@@ -99,110 +100,16 @@ class EyeTipActivity : AppCompatActivity() {
                 tipRecyclerView.setHasFixedSize(true)
 
             } catch (e : NullPointerException) {
-//                Toast.makeText(this, "데이터 가져오기를 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-//
-//                val intent = Intent(this, EyeTipSelectActivity::class.java)
-//                startActivity(intent)
 
-            } finally {
-                eDB.child("refresh").setValue(Random(100).toString())
+                Toast.makeText(this, "데이터 가져오기를 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
 
-                val eyeTipData = EyeDataClass(value)
+                val intent = Intent(this, EyeTipSelectActivity::class.java)
+                startActivity(intent)
 
-                when(dbKey) {
-                    "FOOD" -> {
-                        val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
-                            val intent = Intent(this, eachTipActivity::class.java)
-                            intent.putExtra(IMAGEPATH, it.imagePath)
-                            intent.putExtra(NAME, it.name)
-                            intent.putExtra(COST, it.cost)
-                            intent.putExtra(ELEMENT, it.element)
-                            intent.putExtra(EFFECT, it.effect)
-                            intent.putExtra(EXPLAIN, it.explain)
-                            startActivity(intent)
-                        }
-                        tipRecyclerView.adapter = recyclerAdapter
-                    }
-                    "TEA" -> {
-                        val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData!!.eyeTeaInfo) {
-                            val intent = Intent(this, eachTipActivity::class.java)
-                            intent.putExtra(IMAGEPATH, it.imagePath)
-                            intent.putExtra(NAME, it.name)
-                            intent.putExtra(COST, it.cost)
-                            intent.putExtra(ELEMENT, it.element)
-                            intent.putExtra(EFFECT, it.effect)
-                            intent.putExtra(EXPLAIN, it.explain)
-                            startActivity(intent)
-                        }
-                        tipRecyclerView.adapter = recyclerAdapter
-                    }
-                }
-
-                val lm = LinearLayoutManager(tipRecyclerView.context)
-                tipRecyclerView.layoutManager = lm
-                tipRecyclerView.setHasFixedSize(true)
             }
 
         } // end of onClickListener
 
-//        when (dbKey) {
-//            "FOOD" -> {
-//                    val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
-//                    val intent = Intent(this, eachTipActivity::class.java)
-//                    intent.putExtra("id", it.id.toString())
-//                    intent.putExtra("title", it.title)
-//                    intent.putExtra("content", it.content)
-//                    intent.putExtra("title", it.title)
-//                    startActivity(intent)
-//
-//                }
-//                tipRecyclerView.adapter = recyclerAdapter
-//            }
-//            "TEA" -> {
-//                val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData.eyeTeaInfo) {
-//                    val intent = Intent(this, eachTipActivity::class.java)
-//                    intent.putExtra("id", it.id.toString())
-//                    intent.putExtra("title", it.title)
-//                    intent.putExtra("content", it.content)
-//                    startActivity(intent)
-//
-//                }
-//                tipRecyclerView.adapter = recyclerAdapter
-//            }
-//            "DRUG" -> {
-//                val recyclerAdapter = DrugRecyclerAdapter(this, eyeTipData.eyeDrugInfo) {
-//                    val intent = Intent(this, eachTipActivity::class.java)
-//                    intent.putExtra("id", it.id.toString())
-//                    intent.putExtra("title", it.title)
-//                    intent.putExtra("content", it.content)
-//                    startActivity(intent)
-//
-//                }
-//                tipRecyclerView.adapter = recyclerAdapter
-//            }
-//            "EXCERCISE" -> {
-//                val recyclerAdapter = ExcerciseRecyclerAdapter(this, eyeTipData.eyeExcerciseInfo) {
-//                    val intent = Intent(this, eachTipActivity::class.java)
-//                    intent.putExtra("id", it.id.toString())
-//                    intent.putExtra("title", it.title)
-//                    intent.putExtra("content", it.content)
-//                    startActivity(intent)
-//
-//                }
-//                tipRecyclerView.adapter = recyclerAdapter
-//            }
-//            "INFO" -> {
-//                val recyclerAdapter = InfoRecyclerAdapter(this, eyeTipData.eyeInfo) {
-//                    val intent = Intent(this, eachTipActivity::class.java)
-//                    intent.putExtra("id", it.id.toString())
-//                    intent.putExtra("title", it.title)
-//                    intent.putExtra("content", it.content)
-//                    startActivity(intent)
-//
-//                }
-//                tipRecyclerView.adapter = recyclerAdapter
-//            }
-//        }
 
     } // end of onCreate
 
