@@ -19,20 +19,34 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_2.*
+
 
 class MainActivity2 : AppCompatActivity() {
 
     var isRunning = false
+    lateinit var fAuth: FirebaseAuth
+
+    override fun onStart() {
+        super.onStart()
+        //Firebase Anonymous Authentication
+        val currentUser = fAuth.currentUser
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_2)
+
+        fAuth = FirebaseAuth.getInstance()
 
         //어플리케이션 실행 시 서비스가 실행중인지 확인, 실행중이면 이미지 크기를 큰것으로 교체
         if (checkState()) {
