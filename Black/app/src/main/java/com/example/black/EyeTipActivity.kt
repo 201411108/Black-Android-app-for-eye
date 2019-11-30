@@ -58,6 +58,7 @@ class EyeTipActivity : AppCompatActivity() {
 
         tipTitle.text = title
 
+
         tipTitle.setOnClickListener {
             eDB.child("refresh").setValue(Random(100).toString())
              Log.d("DBOUTERTEST", value.toString())

@@ -94,6 +94,7 @@ class ISGTestActivity : AppCompatActivity() {
         )
 
         // not used
+        /*
         isgTestButton.setOnClickListener {
             //eDB.child("food").child("test").setValue(EyeSavingData("name", "element", "effect", 1234, "explain", resources.getDrawable(R.mipmap.ic_launcher_round)))
             var categoryName: Category = Category.food
@@ -116,6 +117,8 @@ class ISGTestActivity : AppCompatActivity() {
             costET.text.clear()
             explainET.text.clear()
         }
+
+         */
 
         // getter
         isgTestButton2.setOnClickListener {
