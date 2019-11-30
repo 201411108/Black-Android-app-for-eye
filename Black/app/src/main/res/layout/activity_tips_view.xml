@@ -14,8 +14,8 @@
             android:id="@+id/closeButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/left_arrow" />
 
         <TextView
