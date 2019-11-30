@@ -79,11 +79,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        isgBtn.setOnClickListener {
-            val intent = Intent(this, ISGTestActivity::class.java)
-            startActivity(intent)
-        }
-
         //TODO("seekbar 3개")
         periodSeekBar.setOnSeekBarChangeListener(PeriodSeekBarListener())
         sustainTimeSeekBar.setOnSeekBarChangeListener(SustainTimeSeekBarListener())
