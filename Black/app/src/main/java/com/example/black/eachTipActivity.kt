@@ -50,5 +50,9 @@ class eachTipActivity : AppCompatActivity() {
             설명 : $explain
         """.trimIndent()
 
+        closeButton3.setOnClickListener { view ->
+            finish()
+        }
+
     }
 }

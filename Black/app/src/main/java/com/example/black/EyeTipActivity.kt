@@ -111,6 +111,9 @@ class EyeTipActivity : AppCompatActivity() {
             }
 
         } // end of onClickListener
+    closeButton.setOnClickListener { view ->
+        finish()
+    }
 
     } // end of onCreate
 
