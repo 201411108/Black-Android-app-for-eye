@@ -59,34 +59,40 @@ class EyeTipActivity : AppCompatActivity() {
 
         tipTitle.text = title
 
+        lateinit var eyeTipData : EyeDataClass
 
         var hand = Handler()
-        hand.post { Runnable{try {
-            val eyeTipData = EyeDataClass(value)
+        hand.post {
+            Runnable {
+                try {
 
-            when(dbKey) {
-                "FOOD" -> setRecyclerViewAdapter(eyeTipData.eyeFoodInfo)
-                "TEA" -> setRecyclerViewAdapter(eyeTipData.eyeTeaInfo)
-                "DRUG" -> setRecyclerViewAdapter(eyeTipData.eyeDrugInfo)
+                    eyeTipData = EyeDataClass(value)
+
+                    when(dbKey) {
+                        "FOOD" -> setRecyclerViewAdapter(eyeTipData.eyeFoodInfo)
+                        "TEA" -> setRecyclerViewAdapter(eyeTipData.eyeTeaInfo)
+                        "DRUG" -> setRecyclerViewAdapter(eyeTipData.eyeDrugInfo)
+                    }
+
+                    val lm = LinearLayoutManager(tipRecyclerView.context)
+                    tipRecyclerView.layoutManager = lm
+                    tipRecyclerView.setHasFixedSize(true)
+
+                } catch (e : NullPointerException) {
+
+                    Toast.makeText(this, "데이터 가져오기를 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+                }
             }
-
-            val lm = LinearLayoutManager(tipRecyclerView.context)
-            tipRecyclerView.layoutManager = lm
-            tipRecyclerView.setHasFixedSize(true)
-
-        } catch (e : NullPointerException) {
-
-            Toast.makeText(this, "데이터 가져오기를 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            finish()
-
-        }} }
+        } // end of Handler
 
         tipTitle.setOnClickListener {
             eDB.child("refresh").setValue(Random(100).toString())
-             Log.d("DBOUTERTEST", value.toString())
+//            Log.d("DBOUTERTEST", value.toString())
 
             try {
-                val eyeTipData = EyeDataClass(value)
+                eyeTipData = EyeDataClass(value)
+                Log.d("INCLICK", value.toString())
 
                 when(dbKey) {
                     "FOOD" -> setRecyclerViewAdapter(eyeTipData.eyeFoodInfo)
@@ -99,9 +105,8 @@ class EyeTipActivity : AppCompatActivity() {
                 tipRecyclerView.setHasFixedSize(true)
 
             } catch (e : NullPointerException) {
-                
+
                 Toast.makeText(this, "데이터 가져오기를 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                finish()
 
             }
 
