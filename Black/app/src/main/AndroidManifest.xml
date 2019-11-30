@@ -22,15 +22,13 @@
             android:exported="true" />
 
         <activity android:name=".MainActivity">
-        </activity>
-        <!-- added activity-->
-        <activity android:name=".MainActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- added activity-->
         <activity android:name=".EyeTipSelectActivity"/>
         <activity android:name=".EyeTipActivity"/>
         <activity android:name=".ISGTestActivity"/>
