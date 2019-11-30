@@ -1,5 +1,6 @@
 package com.example.black
 
+import android.content.ClipData
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -16,6 +17,7 @@ import androidx.core.view.accessibility.AccessibilityViewCommand
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -37,33 +39,7 @@ class ISGTestActivity : AppCompatActivity() {
 
         RBgroup.check(foodRB.id)
 
-        /* ROOM
 
-        eyesavingDB = EyeSavingDatabase.getInstance(this)
-        //val db = Room.databaseBuilder(applicationContext, EyeSavingDatabase::class.java, "eyesaving").allowMainThreadQueries().build()
-
-        isgTestButton.setOnClickListener {
-            //EyeSavingDatabase db = Room.databaseBuilder(getApplicationContext(), EyeSavingDatabase.class , "eyesaving").build()
-
-            val insertImage : Drawable? = ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher_round, null)
-            //var insertTestData = EyeSaving("orange", "Vitamin C", "good at eye", 2000, "orange is orange", 0)
-            var insertTestData = EyeSaving("orange", "Vitamin C", "good at eye", 2000, "orange is orange", insertImage, 0)
-
-            eyesavingDB?.EyeSavingDAO()?.insertData(insertTestData)
-
-        }
-
-
-        isgTestButton2.setOnClickListener {
-            val dataList = eyesavingDB?.EyeSavingDAO()?.loadAllData()
-            if (dataList != null) {
-                for(i in dataList){
-                    //isgTestImage.setImageDrawable(i.image)
-                    isgTestTextView.text = i.name + i.explain
-                }
-            }
-        }
-      ROOM */
 
 
         //Image
@@ -80,6 +56,10 @@ class ISGTestActivity : AppCompatActivity() {
 
 
         // Database
+
+
+
+
 
         val database = FirebaseDatabase.getInstance()
         val eDB = database.getReference("eyesaving")
@@ -135,9 +115,6 @@ class ISGTestActivity : AppCompatActivity() {
             effectET.text.clear()
             costET.text.clear()
             explainET.text.clear()
-            /*
-
-             */
         }
 
         // getter
@@ -168,3 +145,32 @@ class ISGTestActivity : AppCompatActivity() {
 
     }
 }
+
+
+/* ROOM
+
+        eyesavingDB = EyeSavingDatabase.getInstance(this)
+        //val db = Room.databaseBuilder(applicationContext, EyeSavingDatabase::class.java, "eyesaving").allowMainThreadQueries().build()
+
+        isgTestButton.setOnClickListener {
+            //EyeSavingDatabase db = Room.databaseBuilder(getApplicationContext(), EyeSavingDatabase.class , "eyesaving").build()
+
+            val insertImage : Drawable? = ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher_round, null)
+            //var insertTestData = EyeSaving("orange", "Vitamin C", "good at eye", 2000, "orange is orange", 0)
+            var insertTestData = EyeSaving("orange", "Vitamin C", "good at eye", 2000, "orange is orange", insertImage, 0)
+
+            eyesavingDB?.EyeSavingDAO()?.insertData(insertTestData)
+
+        }
+
+
+        isgTestButton2.setOnClickListener {
+            val dataList = eyesavingDB?.EyeSavingDAO()?.loadAllData()
+            if (dataList != null) {
+                for(i in dataList){
+                    //isgTestImage.setImageDrawable(i.image)
+                    isgTestTextView.text = i.name + i.explain
+                }
+            }
+        }
+      ROOM */
