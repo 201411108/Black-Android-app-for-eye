@@ -4,6 +4,21 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/closeButton3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/left_arrow" />
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/itemDetailImage"
         android:layout_width="200dp"
@@ -43,7 +58,7 @@
             <TextView
                 android:id="@+id/itemDetailContent"
                 android:layout_width="match_parent"
-                android:layout_height="330dp"
+                android:layout_height="310dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
