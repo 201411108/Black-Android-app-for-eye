@@ -13,6 +13,7 @@ package com.example.black
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,44 +59,90 @@ class EyeTipActivity : AppCompatActivity() {
 
         tipTitle.setOnClickListener {
             eDB.child("refresh").setValue(Random(100).toString())
-            // Log.d("DBOUTERTEST", value.toString())
+             Log.d("DBOUTERTEST", value.toString())
 
-            val eyeTipData = EyeDataClass(value)
+            try {
+                val eyeTipData = EyeDataClass(value)
 
-            when(dbKey) {
-                "FOOD" -> {
-                    val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
-                        val intent = Intent(this, eachTipActivity::class.java)
-                        intent.putExtra(IMAGEPATH, it.imagePath)
-                        intent.putExtra(NAME, it.name)
-                        intent.putExtra(COST, it.cost)
-                        intent.putExtra(ELEMENT, it.element)
-                        intent.putExtra(EFFECT, it.effect)
-                        intent.putExtra(EXPLAIN, it.explain)
-                        startActivity(intent)
+                when(dbKey) {
+                    "FOOD" -> {
+                        val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
+                            val intent = Intent(this, eachTipActivity::class.java)
+                            intent.putExtra(IMAGEPATH, it.imagePath)
+                            intent.putExtra(NAME, it.name)
+                            intent.putExtra(COST, it.cost)
+                            intent.putExtra(ELEMENT, it.element)
+                            intent.putExtra(EFFECT, it.effect)
+                            intent.putExtra(EXPLAIN, it.explain)
+                            startActivity(intent)
+                        }
+                        tipRecyclerView.adapter = recyclerAdapter
                     }
-                    tipRecyclerView.adapter = recyclerAdapter
-                }
-                "TEA" -> {
-                    val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData.eyeTeaInfo) {
-                        val intent = Intent(this, eachTipActivity::class.java)
-                        intent.putExtra(IMAGEPATH, it.imagePath)
-                        intent.putExtra(NAME, it.name)
-                        intent.putExtra(COST, it.cost)
-                        intent.putExtra(ELEMENT, it.element)
-                        intent.putExtra(EFFECT, it.effect)
-                        intent.putExtra(EXPLAIN, it.explain)
-                        startActivity(intent)
+                    "TEA" -> {
+                        val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData!!.eyeTeaInfo) {
+                            val intent = Intent(this, eachTipActivity::class.java)
+                            intent.putExtra(IMAGEPATH, it.imagePath)
+                            intent.putExtra(NAME, it.name)
+                            intent.putExtra(COST, it.cost)
+                            intent.putExtra(ELEMENT, it.element)
+                            intent.putExtra(EFFECT, it.effect)
+                            intent.putExtra(EXPLAIN, it.explain)
+                            startActivity(intent)
+                        }
+                        tipRecyclerView.adapter = recyclerAdapter
                     }
-                    tipRecyclerView.adapter = recyclerAdapter
                 }
+
+                val lm = LinearLayoutManager(tipRecyclerView.context)
+                tipRecyclerView.layoutManager = lm
+                tipRecyclerView.setHasFixedSize(true)
+
+            } catch (e : NullPointerException) {
+//                Toast.makeText(this, "데이터 가져오기를 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+//
+//                val intent = Intent(this, EyeTipSelectActivity::class.java)
+//                startActivity(intent)
+
+            } finally {
+                eDB.child("refresh").setValue(Random(100).toString())
+
+                val eyeTipData = EyeDataClass(value)
+
+                when(dbKey) {
+                    "FOOD" -> {
+                        val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
+                            val intent = Intent(this, eachTipActivity::class.java)
+                            intent.putExtra(IMAGEPATH, it.imagePath)
+                            intent.putExtra(NAME, it.name)
+                            intent.putExtra(COST, it.cost)
+                            intent.putExtra(ELEMENT, it.element)
+                            intent.putExtra(EFFECT, it.effect)
+                            intent.putExtra(EXPLAIN, it.explain)
+                            startActivity(intent)
+                        }
+                        tipRecyclerView.adapter = recyclerAdapter
+                    }
+                    "TEA" -> {
+                        val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData!!.eyeTeaInfo) {
+                            val intent = Intent(this, eachTipActivity::class.java)
+                            intent.putExtra(IMAGEPATH, it.imagePath)
+                            intent.putExtra(NAME, it.name)
+                            intent.putExtra(COST, it.cost)
+                            intent.putExtra(ELEMENT, it.element)
+                            intent.putExtra(EFFECT, it.effect)
+                            intent.putExtra(EXPLAIN, it.explain)
+                            startActivity(intent)
+                        }
+                        tipRecyclerView.adapter = recyclerAdapter
+                    }
+                }
+
+                val lm = LinearLayoutManager(tipRecyclerView.context)
+                tipRecyclerView.layoutManager = lm
+                tipRecyclerView.setHasFixedSize(true)
             }
 
-            val lm = LinearLayoutManager(tipRecyclerView.context)
-            tipRecyclerView.layoutManager = lm
-            tipRecyclerView.setHasFixedSize(true)
-
-        }
+        } // end of onClickListener
 
 //        when (dbKey) {
 //            "FOOD" -> {
