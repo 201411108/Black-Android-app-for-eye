@@ -14,6 +14,7 @@ package com.example.black
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -57,6 +58,28 @@ class EyeTipActivity : AppCompatActivity() {
         val title = intent.getStringExtra("TITLE")
 
         tipTitle.text = title
+
+
+        var hand = Handler()
+        hand.post { Runnable{try {
+            val eyeTipData = EyeDataClass(value)
+
+            when(dbKey) {
+                "FOOD" -> setRecyclerViewAdapter(eyeTipData.eyeFoodInfo)
+                "TEA" -> setRecyclerViewAdapter(eyeTipData.eyeTeaInfo)
+                "DRUG" -> setRecyclerViewAdapter(eyeTipData.eyeDrugInfo)
+            }
+
+            val lm = LinearLayoutManager(tipRecyclerView.context)
+            tipRecyclerView.layoutManager = lm
+            tipRecyclerView.setHasFixedSize(true)
+
+        } catch (e : NullPointerException) {
+
+            Toast.makeText(this, "데이터 가져오기를 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            finish()
+
+        }} }
 
         tipTitle.setOnClickListener {
             eDB.child("refresh").setValue(Random(100).toString())

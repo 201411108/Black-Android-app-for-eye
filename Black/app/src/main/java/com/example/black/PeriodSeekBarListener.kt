@@ -2,7 +2,6 @@ package com.example.black
 
 import android.widget.SeekBar
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_main_2.*
 
 //TODO("3개에 대해서 Seekbar 만들기")
 
