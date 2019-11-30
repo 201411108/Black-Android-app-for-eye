@@ -61,9 +61,9 @@ class EyeTipSelectActivity  : AppCompatActivity() {
 
         override fun onClick(v: View?) {
             when(v?.id) {
-                R.id.foodBtn -> sendIntent(FOOD, foodBtn.text.toString())
-                R.id.teaBtn -> sendIntent(TEA, teaBtn.text.toString())
-                R.id.drugBtn -> sendIntent(DRUG, drugBtn.text.toString())
+                R.id.foodBtn -> sendIntent(FOOD, "눈에 좋은 음식")
+                R.id.teaBtn -> sendIntent(TEA, "눈에 좋은 티(Tea)")
+                R.id.drugBtn -> sendIntent(DRUG, "눈에 좋은 약")
                 // R.id.exerciseBtn -> sendIntent(EXERCISE, exerciseBtn.text.toString())
                 // R.id.infoBtn -> sendIntent(INFO, infoBtn.text.toString())
             }
