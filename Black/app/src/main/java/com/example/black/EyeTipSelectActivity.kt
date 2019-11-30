@@ -23,6 +23,10 @@ class EyeTipSelectActivity  : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tip_select)
 
+        closeButton.setOnClickListener {
+            finish()
+        }
+
         val selectBtnListener = selectBtnListener()
 
         foodBtn.setOnClickListener(selectBtnListener)
