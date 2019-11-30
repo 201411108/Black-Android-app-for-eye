@@ -71,10 +71,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        isgBtn.setOnClickListener {
-            val intent = Intent(this, ISGTestActivity::class.java)
-            startActivity(intent)
-        }
         periodSeekBar.setOnSeekBarChangeListener(PeriodSeekBarListener())
         sustainTimeSeekBar.setOnSeekBarChangeListener(SustainTimeSeekBarListener())
         colorSeekBar.setOnSeekBarChangeListener(ColorSeekBarListener())
