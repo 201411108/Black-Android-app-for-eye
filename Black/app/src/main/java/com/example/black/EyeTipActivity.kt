@@ -7,7 +7,7 @@
  * 20191124     handongkim      recyclerview item 클릭 기능 구현
  * 20191127     handongkim      누른 버튼에 따라 알맞는 recyclerViewAdapter 적용
  * 20191128     handongkim      DB 연동 성공
- * 20191130     handongkim      데이터베이스 불러오기 예외처리
+ * 20191130     handongkim      데이터베이스 불러오기 예외처리, recyclerViewAdapter 모듈화
  */
 
 package com.example.black
@@ -58,7 +58,6 @@ class EyeTipActivity : AppCompatActivity() {
 
         tipTitle.text = title
 
-
         tipTitle.setOnClickListener {
             eDB.child("refresh").setValue(Random(100).toString())
              Log.d("DBOUTERTEST", value.toString())
@@ -67,32 +66,9 @@ class EyeTipActivity : AppCompatActivity() {
                 val eyeTipData = EyeDataClass(value)
 
                 when(dbKey) {
-                    "FOOD" -> {
-                        val recyclerAdapter = FoodRecyclerAdapter(this, eyeTipData.eyeFoodInfo) {
-                            val intent = Intent(this, eachTipActivity::class.java)
-                            intent.putExtra(IMAGEPATH, it.imagePath)
-                            intent.putExtra(NAME, it.name)
-                            intent.putExtra(COST, it.cost)
-                            intent.putExtra(ELEMENT, it.element)
-                            intent.putExtra(EFFECT, it.effect)
-                            intent.putExtra(EXPLAIN, it.explain)
-                            startActivity(intent)
-                        }
-                        tipRecyclerView.adapter = recyclerAdapter
-                    }
-                    "TEA" -> {
-                        val recyclerAdapter = TeaRecyclerAdapter(this, eyeTipData.eyeTeaInfo) {
-                            val intent = Intent(this, eachTipActivity::class.java)
-                            intent.putExtra(IMAGEPATH, it.imagePath)
-                            intent.putExtra(NAME, it.name)
-                            intent.putExtra(COST, it.cost)
-                            intent.putExtra(ELEMENT, it.element)
-                            intent.putExtra(EFFECT, it.effect)
-                            intent.putExtra(EXPLAIN, it.explain)
-                            startActivity(intent)
-                        }
-                        tipRecyclerView.adapter = recyclerAdapter
-                    }
+                    "FOOD" -> setRecyclerViewAdapter(eyeTipData.eyeFoodInfo)
+                    "TEA" -> setRecyclerViewAdapter(eyeTipData.eyeTeaInfo)
+                    "DRUG" -> setRecyclerViewAdapter(eyeTipData.eyeDrugInfo)
                 }
 
                 val lm = LinearLayoutManager(tipRecyclerView.context)
@@ -110,7 +86,22 @@ class EyeTipActivity : AppCompatActivity() {
 
         } // end of onClickListener
 
-
     } // end of onCreate
+
+    private fun setRecyclerViewAdapter(param : ArrayList<EyeDataClass.EyeInfo>) {
+
+        val recyclerAdapter = RecyclerViewAdapter(this, param) {
+            val intent = Intent(this, eachTipActivity::class.java)
+            intent.putExtra(IMAGEPATH, it.imagePath)
+            intent.putExtra(NAME, it.name)
+            intent.putExtra(COST, it.cost)
+            intent.putExtra(ELEMENT, it.element)
+            intent.putExtra(EFFECT, it.effect)
+            intent.putExtra(EXPLAIN, it.explain)
+            startActivity(intent)
+        }
+        tipRecyclerView.adapter = recyclerAdapter
+
+    } // end of setRecyclerViewAdapter
 
 } // end of class
