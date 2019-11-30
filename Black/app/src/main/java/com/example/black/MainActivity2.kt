@@ -56,47 +56,40 @@ class MainActivity2 : AppCompatActivity() {
 
         turnOnBtn.setOnClickListener {
 
+
             //Overlay 권한 확인
-            if (!Settings.canDrawOverlays(this)) {
-                startActivity(
-                    Intent(
-                        "android.settings.action.MANAGE_OVERLAY_PERMISSION",
-                        Uri.parse("package:" + getPackageName())
-                    )
-                )
-            }
-//            TODO("이미지 selector할지, 한다면 뭐로 할지")
+            if (PermissionCheck()) {
+                //중지 -> 실행
+                if(!isRunning) {
+                    // Toast.makeText(this, "서비스 실행되며 종료 버튼으로 전환 " + onOffChecker, Toast.LENGTH_SHORT).show()
 
-            //중지 -> 실행
-            if(!isRunning) {
-                // Toast.makeText(this, "서비스 실행되며 종료 버튼으로 전환 " + onOffChecker, Toast.LENGTH_SHORT).show()
-
-                // 모든 값이 입력되어야 서비스 실행
-                // 입력하지 않을 경우 토스트 메세지 발생
+                    // 모든 값이 입력되어야 서비스 실행
+                    // 입력하지 않을 경우 토스트 메세지 발생
 //                isRunning = !startServiceWhenNotNull(!isRunning, periodText2.text.toString(), sustainTimeText2.text.toString(), colorText2.text.toString())
-                //isRunning = !startServiceWhenNotNull(!isRunning, periodSeekBar.progress.toString(), sustainSeekBar.progress.toString(), colorSeekBar.progress.toString())
+                    //isRunning = !startServiceWhenNotNull(!isRunning, periodSeekBar.progress.toString(), sustainSeekBar.progress.toString(), colorSeekBar.progress.toString())
 
-                val intent = Intent(this, NormalService::class.java)
-                intent.putExtra("inputPeriod", periodSeekBar.progress.toString().toLong()*1000)
-                intent.putExtra("inputSustainTime", sustainTimeSeekBar.progress.toString().toLong())
-                intent.putExtra("inputColor", colorSeekBar.progress.toString().toInt()*250/100)
-                startService(intent)
-                // 서비스 시작 후 이미지 변경(안드로이가 서비스 실행 중 -> 중지 버튼)
-                turnOnBtn.setImageResource(R.drawable.end_button2)
+                    val intent = Intent(this, NormalService::class.java)
+                    intent.putExtra("inputPeriod", periodSeekBar.progress.toString().toLong()*1000)
+                    intent.putExtra("inputSustainTime", sustainTimeSeekBar.progress.toString().toLong())
+                    intent.putExtra("inputColor", colorSeekBar.progress.toString().toInt()*250/100)
+                    startService(intent)
+                    // 서비스 시작 후 이미지 변경(안드로이가 서비스 실행 중 -> 중지 버튼)
+                    turnOnBtn.setImageResource(R.drawable.end_button2)
 
 
-                isRunning = true;
-            }
+                    isRunning = true
+                }
 
-            //실행 -> 중지
-            else {
-                // Toast.makeText(this, "서비스 종료하며 시작 버튼으로 전환 " + onOffChecker, Toast.LENGTH_SHORT).show()
-                // 구글이 서비스 실행 안되고 있는 중 -> 시작 버튼
-                turnOnBtn.setImageResource(R.drawable.start_button)
+                //실행 -> 중지
+                else {
+                    // Toast.makeText(this, "서비스 종료하며 시작 버튼으로 전환 " + onOffChecker, Toast.LENGTH_SHORT).show()
+                    // 구글이 서비스 실행 안되고 있는 중 -> 시작 버튼
+                    turnOnBtn.setImageResource(R.drawable.start_button)
 
-                // 서비스 중지
-                stopService(Intent(this, NormalService::class.java))
-                isRunning = false
+                    // 서비스 중지
+                    stopService(Intent(this, NormalService::class.java))
+                    isRunning = false
+                }
             }
         }
 
@@ -116,6 +109,21 @@ class MainActivity2 : AppCompatActivity() {
         colorSeekBar.setOnSeekBarChangeListener(ColorSeekBarListener())
 
     } // end of onCreate
+
+
+    fun PermissionCheck() : Boolean {
+        if (!Settings.canDrawOverlays(this)) {
+            startActivity(
+                Intent(
+                    "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+                    Uri.parse("package:" + getPackageName())
+                )
+            )
+            return false
+        }
+        return true
+    }
+
 
     // TODO :: SeekBar로 변경하며 필요 없어짐
 

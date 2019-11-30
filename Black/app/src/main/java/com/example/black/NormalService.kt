@@ -204,10 +204,6 @@ class NormalService : Service() {
     }
 
     fun addBlackView(): View {
-//        var view = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.background, null)
-//        var manager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-//
-
         if (!isOnView) {
             manager.addView(view, params)
             isOnView = true
