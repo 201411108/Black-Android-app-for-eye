@@ -76,11 +76,9 @@ class EyeTipActivity : AppCompatActivity() {
                 tipRecyclerView.setHasFixedSize(true)
 
             } catch (e : NullPointerException) {
-
+                
                 Toast.makeText(this, "데이터 가져오기를 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, EyeTipSelectActivity::class.java)
-                startActivity(intent)
+                finish()
 
             }
 
