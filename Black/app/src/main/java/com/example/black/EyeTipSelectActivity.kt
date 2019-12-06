@@ -6,6 +6,7 @@
  * 20191122     handongkim      init
  * 20191127     handongkim      xml 디자인 수정, 버튼에 따라 다른 DB가 연동되도록 구현
  * 20191130     handongkim      운동 및 눈 상식 추후 준비 중으로 변경
+ * 20191206     handongkim      해야 할 일 추가
  */
 
 package com.example.black
@@ -29,6 +30,7 @@ class EyeTipSelectActivity  : AppCompatActivity() {
 
         val selectBtnListener = selectBtnListener()
 
+        // TODO :: 각 버튼을 클릭할 때 Firebase에서 DB를 가져와서 RoomDB로 저장
         foodBtn.setOnClickListener(selectBtnListener)
         teaBtn.setOnClickListener(selectBtnListener)
         drugBtn.setOnClickListener(selectBtnListener)

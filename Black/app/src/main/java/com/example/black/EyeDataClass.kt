@@ -7,6 +7,8 @@
  * 20191127     handongkim      테스트 데이터 추가
  * 20191128     handongkim      db 연동 성공
  * 20191130     handongkim      통합 클래스로 모듈화
+ * TODO ::
+ *  RoomDB로 이식하는 부분을 추가해야 한다.
  */
 
 package com.example.black

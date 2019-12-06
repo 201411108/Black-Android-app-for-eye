@@ -71,6 +71,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // TODO :: .ini 파일을 활용하여 사용자가 설정했던 값을 기억하고 있다가 다시 실행할 때 불러오기
+        //         onCreate 초반부에 ini 파일 값을 불러와서 Seekbar 세팅하는 부분을 두기
+        //         아마 ini 파일에 저장하는 것은 onDelete()와 같은 메소드를 활용하면 되지 않을까?
         periodSeekBar.setOnSeekBarChangeListener(PeriodSeekBarListener())
         sustainTimeSeekBar.setOnSeekBarChangeListener(SustainTimeSeekBarListener())
         colorSeekBar.setOnSeekBarChangeListener(ColorSeekBarListener())
