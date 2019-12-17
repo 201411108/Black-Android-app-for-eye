@@ -170,6 +170,4 @@
         app:layout_constraintTop_toBottomOf="@id/sustainTimeSeekBarText" />
 
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

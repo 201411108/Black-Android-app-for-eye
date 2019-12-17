@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.graphics.toColor
+import com.example.black.util.IniUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.background.*
 import java.security.Permission
@@ -29,6 +30,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // seekbar 유저 세팅 반영
+        val iniUtil = IniUtil(this)
+        iniUtil.setup()
+
+        periodSeekBar.progress = iniUtil.getIni("loadInfo", "period")!!.toInt()
+        sustainTimeSeekBar.progress = iniUtil.getIni("loadInfo", "sustain")!!.toInt()
+        colorSeekBar.progress = iniUtil.getIni("loadInfo", "color")!!.toInt()
 
         //어플리케이션 실행 시 서비스가 실행중인지 확인, 실행중이면 이미지 크기를 큰것으로 교체
         if (checkState()) {
@@ -71,12 +80,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // TODO :: .ini 파일을 활용하여 사용자가 설정했던 값을 기억하고 있다가 다시 실행할 때 불러오기
-        //         onCreate 초반부에 ini 파일 값을 불러와서 Seekbar 세팅하는 부분을 두기
-        //         아마 ini 파일에 저장하는 것은 onDelete()와 같은 메소드를 활용하면 되지 않을까?
-        periodSeekBar.setOnSeekBarChangeListener(PeriodSeekBarListener())
-        sustainTimeSeekBar.setOnSeekBarChangeListener(SustainTimeSeekBarListener())
-        colorSeekBar.setOnSeekBarChangeListener(ColorSeekBarListener())
+        periodSeekBar.setOnSeekBarChangeListener(PeriodSeekBarListener(iniUtil))
+        sustainTimeSeekBar.setOnSeekBarChangeListener(SustainTimeSeekBarListener(iniUtil))
+        colorSeekBar.setOnSeekBarChangeListener(ColorSeekBarListener(iniUtil))
 
     } // end of onCreate
 
@@ -104,11 +110,14 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    inner class PeriodSeekBarListener : SeekBar.OnSeekBarChangeListener{
+    inner class PeriodSeekBarListener(iniUtil: IniUtil) : SeekBar.OnSeekBarChangeListener{
+
+        val iniUtil = iniUtil
 
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             periodSeekBar.progress = progress
             periodSeekBarText.text = "${seekBar?.progress.toString()}초"
+            iniUtil.setIni("loadInfo", "period", progress.toString())
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -119,11 +128,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    inner class SustainTimeSeekBarListener : SeekBar.OnSeekBarChangeListener{
+    inner class SustainTimeSeekBarListener(iniUtil: IniUtil) : SeekBar.OnSeekBarChangeListener{
+
+        val iniUtil = iniUtil
 
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             seekBar?.progress = (progress/10)*10
             sustainTimeSeekBarText.text = "${seekBar?.progress.toString()}ms"
+            iniUtil.setIni("loadInfo", "sustain", seekBar?.progress.toString())
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -134,11 +146,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    inner class ColorSeekBarListener : SeekBar.OnSeekBarChangeListener{
+    inner class ColorSeekBarListener(iniUtil: IniUtil) : SeekBar.OnSeekBarChangeListener{
+
+        val iniUtil = iniUtil
 
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             seekBar?.progress = (progress/10)*10
             colorSeekBarText.text = "${seekBar?.progress.toString()}%"
+            iniUtil.setIni("loadInfo", "color", seekBar?.progress.toString())
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
