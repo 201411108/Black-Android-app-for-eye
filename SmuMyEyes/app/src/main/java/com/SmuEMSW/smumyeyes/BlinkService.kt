@@ -1,9 +1,6 @@
 package com.SmuEMSW.smumyeyes
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -97,43 +94,33 @@ class BlinkService : Service() {
         var notificationIntent = Intent(this, MainActivity::class.java)
         var pedingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
 
-
-        var channelId = "test_channel"
-        //notification 버전에 따른 충돌 오류
-//        var channel = NotificationChannel(
-//            channelId,
-//            "service_channel",
-//            NotificationManager.IMPORTANCE_DEFAULT
-//        )
-
-        var channel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            var channelId = "MyEyes_channel"
+            var channel = NotificationChannel(
                 channelId,
                 "service_channel",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
+            var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+            var builder = NotificationCompat.Builder(this, channelId)
+            builder.setContentTitle("내눈 서비스가 실행중입니다.")
+            builder.setContentText("자세한 내용은 알림창을 눌러주세요.")
+            builder.setSmallIcon(R.drawable.app_image)
+            builder.setContentIntent(pedingIntent)
+            if (input == 1) {
+                manager.notify(10, builder.build())
+            } else {
+                manager.cancel(10)
+            }
         } else {
-            
-            TODO("VERSION.SDK_INT < O")
-        }
-
-
-        var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        manager.createNotificationChannel(channel)
-
-        var builder = NotificationCompat.Builder(this, channelId)
-
-
-        builder.setContentTitle("내눈 서비스가 실행중입니다.")
-        builder.setContentText("자세한 내용은 알림창을 눌러주세요.")
-        builder.setSmallIcon(R.drawable.app_image)
-        builder.setContentIntent(pedingIntent)
-
-        if (input == 1) {
+            var builder = NotificationCompat.Builder(this)
+            builder.setContentTitle("내눈 서비스가 실행중입니다.")
+            builder.setContentText("자세한 내용은 알림창을 눌러주세요.")
+            builder.setSmallIcon(R.drawable.app_image)
+            builder.setContentIntent(pedingIntent)
+            var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.notify(10, builder.build())
-        } else {
-            manager.cancel(10)
         }
     }
 
