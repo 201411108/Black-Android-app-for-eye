@@ -7,10 +7,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.IBinder
-import android.os.Looper
+import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -103,11 +100,23 @@ class BlinkService : Service() {
 
         var channelId = "test_channel"
         //notification 버전에 따른 충돌 오류
-        var channel = NotificationChannel(
-            channelId,
-            "service_channel",
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
+//        var channel = NotificationChannel(
+//            channelId,
+//            "service_channel",
+//            NotificationManager.IMPORTANCE_DEFAULT
+//        )
+
+        var channel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel(
+                channelId,
+                "service_channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+        } else {
+            
+            TODO("VERSION.SDK_INT < O")
+        }
+
 
         var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">내눈!</string>
     <string name="inflate">inflate</string>
+    <string name="tranparent">투명도 0~100%</string>
+    <string name="period">주기 1~60초</string>
+    <string name="sustain">지속시간 100~500ms</string>
 </resources>

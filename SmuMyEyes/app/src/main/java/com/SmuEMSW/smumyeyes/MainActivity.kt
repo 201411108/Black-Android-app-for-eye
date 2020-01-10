@@ -4,12 +4,14 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.black.util.IniUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.android.gms.ads.AdRequest
@@ -81,18 +83,18 @@ class MainActivity : AppCompatActivity() {
 
     } // end of onCreate
 
-    //canDrawOverlays 버전관리 해야함
+
     fun PermissionCheck() : Boolean {
-        if (!Settings.canDrawOverlays(this)) {
-            startActivity(
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(this))
+            return true
+
+        else startActivity(
                 Intent(
                     "android.settings.action.MANAGE_OVERLAY_PERMISSION",
                     Uri.parse("package:" + getPackageName())
                 )
             )
             return false
-        }
-        return true
     }
 
     //서비스가 이미 실행중인지 확인하는 함수
