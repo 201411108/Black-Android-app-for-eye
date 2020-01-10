@@ -1,6 +1,12 @@
 # Ds_Store ignore
 .DS_Store
 
+# key
+key
+
+# release
+release/
+
 # except idea setting
 .idea/
 
