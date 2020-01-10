@@ -31,7 +31,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         app:adSize="SMART_BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:adUnitId="ca-app-pub-6495138949719228/5282904000"
         app:layout_constraintBottom_toTopOf="@+id/turnOnBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -40,6 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.049"></com.google.android.gms.ads.AdView>
+    <!--app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
 
     <TextView
         android:id="@+id/colorSeekBarText"
