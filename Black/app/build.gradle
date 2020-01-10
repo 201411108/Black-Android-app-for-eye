@@ -68,4 +68,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     // ini4j
     implementation 'org.ini4j:ini4j:0.5.4'
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
+
 }
