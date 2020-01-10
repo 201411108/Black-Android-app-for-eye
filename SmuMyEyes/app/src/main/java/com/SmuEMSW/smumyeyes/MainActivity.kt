@@ -10,6 +10,7 @@ import android.os.Handler
 import android.provider.Settings
 import android.widget.SeekBar
 import android.widget.Toast
+import com.example.black.util.IniUtil
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
