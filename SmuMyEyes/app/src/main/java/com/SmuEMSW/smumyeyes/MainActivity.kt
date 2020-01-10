@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
                 //중지 -> 실행
                 if(!isRunning) {
-                    val intent = Intent(this, NormalService::class.java)
+                    val intent = Intent(this, BlinkService::class.java)
                     intent.putExtra("inputPeriod", periodSeekBar.progress.toString().toLong()*1000)
                     intent.putExtra("inputSustainTime", sustainTimeSeekBar.progress.toString().toLong())
                     intent.putExtra("inputColor", colorSeekBar.progress.toString().toInt()*250/100)
@@ -57,15 +57,10 @@ class MainActivity : AppCompatActivity() {
                 //실행 -> 중지
                 else {
                     turnOnBtn.setImageResource(R.drawable.start_button)
-                    stopService(Intent(this, NormalService::class.java))
+                    stopService(Intent(this, BlinkService::class.java))
                     isRunning = false
                 }
             }
-        }
-
-        tipBtn.setOnClickListener {
-            val intent = Intent(this, EyeTipSelectActivity::class.java)
-            startActivity(intent)
         }
 
         periodSeekBar.setOnSeekBarChangeListener(PeriodSeekBarListener(iniUtil))
@@ -74,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
     } // end of onCreate
 
-
+    //canDrawOverlays 버전관리 해야함
     fun PermissionCheck() : Boolean {
         if (!Settings.canDrawOverlays(this)) {
             startActivity(
@@ -91,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     //서비스가 이미 실행중인지 확인하는 함수
     fun checkState(): Boolean {
         for(service in (getSystemService(Context.ACTIVITY_SERVICE)as ActivityManager).getRunningServices(Integer.MAX_VALUE)){
-            if (NormalService::class.java.name == service.service.className) {
+            if (BlinkService::class.java.name == service.service.className) {
                 return true
             }
         }
