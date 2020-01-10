@@ -19,6 +19,7 @@
         </activity>
     </application>
 
+<!--아이콘 수정-->
 <!--    <application-->
 <!--        android:allowBackup="true"-->
 <!--        android:icon="@mipmap/app_image2"-->
