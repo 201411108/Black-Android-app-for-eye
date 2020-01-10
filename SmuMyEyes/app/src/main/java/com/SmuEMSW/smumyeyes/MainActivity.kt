@@ -12,6 +12,9 @@ import android.widget.SeekBar
 import android.widget.Toast
 import com.example.black.util.IniUtil
 import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +23,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //광고
+        lateinit var mAdView : AdView
+
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         val iniUtil = IniUtil(this)
         iniUtil.setup()

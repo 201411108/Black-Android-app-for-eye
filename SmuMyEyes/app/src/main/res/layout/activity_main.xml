@@ -20,64 +20,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.318" />
 
-    <Button
-        android:id="@+id/tipBtn2"
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tip"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:background="@drawable/buttonshape"
-        android:shadowColor="#A8A8A8"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="10"
-        android:layout_marginTop="20dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/turnOnBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.102" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        ads:layout_constraintTop_toTopOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:alpha="0.7"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/turnOnBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.905"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.163"
-        app:srcCompat="@drawable/tip" />
-
-    <ImageButton
-        android:id="@+id/tipBtn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/tip"
-        android:alpha="0.7"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-    <Button
-        android:id="@+id/isgBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Setting Data"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tipBtn"
-        app:layout_constraintVertical_bias="0.102" />
 
     <TextView
         android:id="@+id/colorSeekBarText"
