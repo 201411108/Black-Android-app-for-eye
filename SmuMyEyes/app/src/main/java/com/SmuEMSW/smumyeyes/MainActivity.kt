@@ -10,8 +10,11 @@ import android.os.Handler
 import android.provider.Settings
 import android.widget.SeekBar
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    var isRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
