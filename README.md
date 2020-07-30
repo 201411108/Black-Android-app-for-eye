@@ -23,9 +23,9 @@ Recommand : Android 8.0(Oreo) above
 * PM : [KyeongMoon](https://github.com/KyeongMoon)
 
 * Dev
-* [201411108](https://github.com/201411108)
-* [ImSangKyun](https://github.com/ImSangKyun)
-* [skyghdus](https://github.com/skyghdus)
+  * [201411108](https://github.com/201411108)
+  * [ImSangKyun](https://github.com/ImSangKyun)
+  * [skyghdus](https://github.com/skyghdus)
 
 See also the list of [contributors](https://github.com/201411108/EmbeddedSoftware_Project/graphs/contributors) who participated in this project.
 
