@@ -1,4 +1,35 @@
-# EmbeddedSoftware_Project 
+# EmbeddedSoftware_Project
+
+![size](https://img.shields.io/github/repo-size/201411108/EmbeddedSoftware_Project)
+![contributors](https://img.shields.io/github/contributors/201411108/EmbeddedSoftware_Project)
+![stars](https://img.shields.io/github/stars/201411108/EmbeddedSoftware_Project?style=plastic)
+
+* [Download available on Google Play Store](https://play.google.com/store/apps/details?id=com.SmuEMSW.smumyeyes)
+
+## Prerequisites
+
+```
+At least : Android 5.0(Lollipop) above
+
+Recommand : Android 8.0(Oreo) above
+```
+
+## Built With
+
+* [Android Studio](https://developer.android.com/studio)
+
+## Authors
+
+* PM : [KyeongMoon](https://github.com/KyeongMoon)
+
+* Dev
+* [201411108](https://github.com/201411108)
+* [ImSangKyun](https://github.com/ImSangKyun)
+* [skyghdus](https://github.com/skyghdus)
+
+See also the list of [contributors](https://github.com/201411108/EmbeddedSoftware_Project/graphs/contributors) who participated in this project.
+
+---
 
 ### Coding convention
 통합 전까지 자신이 작성한 코드 앞에는 이니셜을 붙여서 표시
@@ -17,8 +48,3 @@
 
 ### 프로젝트 일정
 12월 30일 ~ : 앱 출시 기간 논의
-
-### 추가 요구사항
-1. 색상, 주기, 지속시간을 정보를 저장하고 있다가 앱 재실행 시 불러와서 사용할 수 있도록 -> 12/17 구현 왈뇨
-
-2. firebase db 불러오기 문제 해결
