@@ -34,3 +34,4 @@ See also the list of [contributors](https://github.com/201411108/EmbeddedSoftwar
 
 1. Blink function according to user option
 2. Saving user's option settings
+3. Get data from Google Firebase database(not included in deployed version)
