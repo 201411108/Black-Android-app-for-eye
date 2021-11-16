@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EmbeddedSoftware</string>
+    <string name="title_activity_khdstudy_list">KHDStudyListActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>

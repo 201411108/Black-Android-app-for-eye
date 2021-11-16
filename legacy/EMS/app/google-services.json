@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "606535466748",
+    "firebase_url": "https://embeddedsoftware-1032e.firebaseio.com",
+    "project_id": "embeddedsoftware-1032e",
+    "storage_bucket": "embeddedsoftware-1032e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606535466748:android:eb4fe9cd77c74233b9e179",
+        "android_client_info": {
+          "package_name": "cs.smu.ac.embeddedsoftware"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606535466748-php9et9ap0vpe58d24baljgoumfhc88j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cs.smu.ac.embeddedsoftware",
+            "certificate_hash": "37e347443ce7c2c09a207a5a5457b031df16452e"
+          }
+        },
+        {
+          "client_id": "606535466748-35g8irvgl5talguaajvfantfma8ij90v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe3tqfoaJpE3pd-UARhXoC1p3lheU0odI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606535466748-35g8irvgl5talguaajvfantfma8ij90v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
